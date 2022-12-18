@@ -1,9 +1,7 @@
 const identities = require('./seeds/001_identities');
-const todos = require('../examples/db/seeds/002_todos');
 
 const seed = async () => {
   await identities.seed();
-  await todos.seed();
 };
 
 (async () => {

@@ -284,46 +284,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Check",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/admin/todos/{{todo_id}}/check",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"admin",
-								"todos",
-								"{{todo_id}}",
-								"check"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Uncheck",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/admin/todos/{{todo_id}}/uncheck",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"admin",
-								"todos",
-								"{{todo_id}}",
-								"uncheck"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"auth": {
@@ -381,11 +341,15 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost:8080"
+			"value": "http://localhost:9000"
 		},
 		{
 			"key": "jwt",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NDQwMWFjLThlMTgtNDkzMC05YzM3LWRkNzMyZWRiOTMzYyIsIm5hbWUiOiJNaWNoYWVsIFNjb3R0IiwiZW1haWwiOiJtaWNoYWVsQGVtYWlsLmNvbSIsImlhdCI6MTYxNDUxODIzOSwiZXhwIjoxNjE0NTE5MTM5fQ.aybxWo7tCATpU8jbBjgYUEg5LYP_gPdfWDi_9kE01iM"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWljaGFlbCBTY290dCIsImVtYWlsIjoibWljaGFlbEBlbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJtZSI6InFLa2VZcG1KeFFMaUhESlFqZkFCIiwiaWF0IjoxNjcxMjk2MDM3LCJleHAiOjE2NzEyOTY5Mzd9.VLnlICN9xkCPJKUlSZPloOYJFypJKHBPhg89RUrRPfA"
+		},
+		{
+			"key": "todo_id",
+			"value": "iaXG9YGAs9CQAyKOTFNT"
 		}
 	]
 }
