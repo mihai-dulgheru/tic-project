@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon ./server",
+    "dev": "nodemon server.js",
     "seed": "node ./db/seed"
   },
   "author": "",
@@ -43,7 +43,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.8.0",
     "nodemon": "^2.0.20",
-    "pino-pretty": "^4.8.0",
+    "pino-pretty": "^9.1.1",
     "prettier": "^2.8.1"
   }
 }
