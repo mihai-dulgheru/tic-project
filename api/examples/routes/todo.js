@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const { Todo } = require('../controllers');
+const { todoSchema } = require('../schemas');
+const { validate } = require('../../middleware');
 
 const router = Router();
 
@@ -7,7 +9,7 @@ const router = Router();
  * Use RESTful routes only
  * @see https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
  */
-router.post('/admin/todos', Todo.create);
+router.post('/admin/todos', validate(todoSchema), Todo.create);
 router.get('/admin/todos', Todo.readMany);
 router.get('/admin/todos/:id', Todo.readOne);
 router.put('/admin/todos/:id', Todo.update);

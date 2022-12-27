@@ -6,6 +6,7 @@ const loading = require('./loading');
 const notFound = require('./not-found');
 const recaptcha = require('./recaptcha');
 const speedLimiter = require('./speed-limiter');
+const validate = require('./validate');
 
 module.exports = {
   authenticate,
@@ -16,4 +17,5 @@ module.exports = {
   notFound,
   recaptcha,
   speedLimiter,
+  validate,
 };
