@@ -11,11 +11,18 @@
         <li v-if="isLoggedIn">
           <router-link to="/requests">Requests</router-link>
         </li>
+        <!-- TODO -->
+        <li v-if="isLoggedIn">
+          <router-link to="/profile">Profile</router-link>
+        </li>
         <li v-else>
           <router-link to="/auth">Login</router-link>
         </li>
         <li v-if="isLoggedIn">
-          <base-button @click="logout">Logout</base-button>
+          <base-button @click="logout">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i>
+            Logout
+          </base-button>
         </li>
       </ul>
     </nav>

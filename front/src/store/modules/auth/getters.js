@@ -1,14 +1,17 @@
 export default {
-  userId(state) {
-    return state.userId;
+  didAutoLogout(state) {
+    return state.didAutoLogout;
   },
-  token(state) {
-    return state.token;
+  email(state) {
+    return state.email;
   },
   isAuthenticated(state) {
     return !!state.token;
   },
-  didAutoLogout(state) {
-    return state.didAutoLogout;
+  token(state) {
+    return state.token;
+  },
+  userId(state) {
+    return state.userId;
   },
 };

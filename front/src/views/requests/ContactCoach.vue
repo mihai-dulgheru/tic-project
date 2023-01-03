@@ -2,7 +2,12 @@
   <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="email">Your E-Mail</label>
-      <input type="email" id="email" v-model.trim="email" />
+      <input
+        :disabled="disabled"
+        id="email"
+        type="email"
+        v-model.trim="email"
+      />
     </div>
     <div class="form-control">
       <label for="message">Message</label>
@@ -18,6 +23,9 @@
 </template>
 
 <script>
+import { isEmpty } from "lodash";
+import { mapGetters } from "vuex";
+
 export default {
   name: "ContactCoach",
   data() {
@@ -26,6 +34,14 @@ export default {
       message: "",
       formIsValid: true,
     };
+  },
+  computed: {
+    ...mapGetters({
+      userEmail: "email",
+    }),
+    disabled() {
+      return this.userEmail && !isEmpty(this.userEmail);
+    },
   },
   methods: {
     submitForm() {
@@ -45,6 +61,9 @@ export default {
       });
       this.$router.replace("/coaches");
     },
+  },
+  created() {
+    this.email = this.userEmail || "";
   },
 };
 </script>

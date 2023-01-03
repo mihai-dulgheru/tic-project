@@ -13,16 +13,20 @@
     <section>
       <base-card>
         <div class="controls">
+          <base-button mode="outline" @click="loadCoaches(true)">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </base-button>
           <!-- TODO -->
-          <!-- <button>LIST</button>
-          <button>GRID</button> -->
-          <base-button mode="outline" @click="loadCoaches(true)"
-            >Refresh</base-button
-          >
-          <base-button v-if="!isLoggedIn" link to="/auth?redirect=register"
+          <!-- <base-button v-if="!isLoggedIn" link to="/auth?redirect=register"
             >Login to Register as Coach</base-button
           >
           <base-button v-else-if="!isLoading && !isCoach" link to="/register"
+            >Register as Coach</base-button
+          > -->
+          <base-button
+            v-if="isLoggedIn && !isCoach && !isLoading"
+            link
+            to="/register"
             >Register as Coach</base-button
           >
         </div>
@@ -61,9 +65,10 @@ export default {
       isLoading: false,
       error: null,
       activeFilters: {
-        frontend: true,
         backend: true,
         career: true,
+        frontend: true,
+        name: "",
       },
     };
   },
@@ -72,10 +77,18 @@ export default {
       const coaches = this.$store.getters["coaches/coaches"];
       const activeFilters = this.activeFilters;
       return coaches.filter((coach) => {
+        const { areas } = coach;
+        const name = `${coach.firstName} ${coach.lastName}`.toLowerCase();
+        const nameReverse =
+          `${coach.lastName} ${coach.firstName}`.toLowerCase();
         return (
-          (activeFilters.frontend && coach.areas.includes("frontend")) ||
-          (activeFilters.backend && coach.areas.includes("backend")) ||
-          (activeFilters.career && coach.areas.includes("career"))
+          ((activeFilters.frontend && areas.includes("frontend")) ||
+            (activeFilters.backend && areas.includes("backend")) ||
+            (activeFilters.career && areas.includes("career"))) &&
+          (name.toLowerCase().includes(activeFilters.name.toLowerCase()) ||
+            nameReverse
+              .toLowerCase()
+              .includes(activeFilters.name.toLowerCase()))
         );
       });
     },
