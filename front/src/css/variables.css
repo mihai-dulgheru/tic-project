@@ -1,0 +1,15 @@
+:root {
+  --primary: hsl(173, 58%, 39%);
+  --secondary: hsl(43, 74%, 66%);
+  --error: hsl(0, 100%, 66%);
+  --info: hsl(207, 90%, 54%);
+  --success: hsl(122, 39%, 49%);
+  --warning: hsl(45, 100%, 51%);
+  --light: hsl(0, 0%, 80%);
+  --dark: hsl(197, 37%, 24%);
+
+  --bg-frontend: var(--secondary);
+  --bg-backend: hsl(27, 87%, 67%);
+  --bg-career: hsl(12, 76%, 61%);
+  --bg-focus: hsla(173, 58%, 39%, 0.1);
+}
