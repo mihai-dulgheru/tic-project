@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 
 import authModule from "./modules/auth";
 import coachesModule from "./modules/coaches";
+import profileModule from "./modules/profile";
 import requestsModule from "./modules/requests";
 
 export default createStore({
@@ -12,6 +13,7 @@ export default createStore({
   modules: {
     auth: authModule,
     coaches: coachesModule,
+    profile: profileModule,
     requests: requestsModule,
   },
 });

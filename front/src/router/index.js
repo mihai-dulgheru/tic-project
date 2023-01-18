@@ -8,6 +8,7 @@ const ContactCoach = () => import("@/views/requests/ContactCoach.vue");
 const NotFound = () => import("@/views/NotFound.vue");
 const RequestsReceived = () => import("@/views/requests/RequestsReceived.vue");
 const UserAuth = () => import("@/views/auth/UserAuth.vue");
+const UserProfile = () => import("@/views/profile/UserProfile.vue");
 
 const routes = [
   { path: "/", redirect: "/coaches" },
@@ -26,6 +27,11 @@ const routes = [
   {
     path: "/requests",
     component: RequestsReceived,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/profile",
+    component: UserProfile,
     meta: { requiresAuth: true },
   },
   { path: "/auth", component: UserAuth, meta: { requiresUnauth: true } },
