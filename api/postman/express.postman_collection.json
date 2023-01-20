@@ -16,8 +16,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = JSON.parse(responseBody);",
-									"pm.collectionVariables.set(\"jwt\", jsonData.token);"
+									"if (pm.response.code === 200) {",
+									"    const jsonData = JSON.parse(responseBody);",
+									"    pm.collectionVariables.set(\"jwt\", jsonData.token);",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -49,6 +51,19 @@
 				},
 				{
 					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    pm.collectionVariables.unset(\"jwt\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -142,7 +157,7 @@
 			]
 		},
 		{
-			"name": "Todo",
+			"name": "Coach",
 			"item": [
 				{
 					"name": "Create",
@@ -151,8 +166,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = JSON.parse(responseBody);\r",
-									"pm.collectionVariables.set(\"todo_id\", jsonData.data.id);"
+									"if (pm.response.code === 200) {\r",
+									"    const jsonData = JSON.parse(responseBody);\r",
+									"    pm.collectionVariables.set(\"coach_id\", jsonData.data.id);\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -163,7 +180,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Learn Vue 3\"\r\n}",
+							"raw": "{\r\n    \"areas\": [\r\n        \"frontend\",\r\n        \"backend\",\r\n        \"career\"\r\n    ],\r\n    \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\",\r\n    \"email\": \"michael@email.com\",\r\n    \"firstName\": \"Michael\",\r\n    \"hourlyRate\": 30,\r\n    \"lastName\": \"Scott\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,13 +188,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/admin/todos",
+							"raw": "{{url}}/admin/coaches",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"admin",
-								"todos"
+								"coaches"
 							]
 						}
 					},
@@ -189,20 +206,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/admin/todos?only=pending",
+							"raw": "{{url}}/coaches",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"admin",
-								"todos"
-							],
-							"query": [
-								{
-									"key": "only",
-									"value": "pending",
-									"description": "completed/pending"
-								}
+								"coaches"
 							]
 						}
 					},
@@ -214,14 +223,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/admin/todos/{{todo_id}}",
+							"raw": "{{url}}/coaches/{{coach_id}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"admin",
-								"todos",
-								"{{todo_id}}"
+								"coaches",
+								"{{coach_id}}"
 							]
 						}
 					},
@@ -230,11 +238,11 @@
 				{
 					"name": "Update",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Learn Vue 3!\",\r\n    \"done\": true\r\n}",
+							"raw": "{\r\n    \"description\": \"Bacon ipsum dolor amet kevin doner pork chop short loin beef ribs. Buffalo bacon pork belly meatball sausage pork ham ham hock drumstick rump sirloin capicola frankfurter picanha.\",\r\n    \"hourlyRate\": 30\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -242,14 +250,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/admin/todos/{{todo_id}}",
+							"raw": "{{url}}/admin/coaches/{{coach_id}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"admin",
-								"todos",
-								"{{todo_id}}"
+								"coaches",
+								"{{coach_id}}"
 							]
 						}
 					},
@@ -262,7 +270,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.collectionVariables.unset(\"todo_id\");"
+									"if (pm.response.code === 200) {\r",
+									"    pm.collectionVariables.unset(\"coach_id\");\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -272,14 +282,190 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/admin/todos/{{todo_id}}",
+							"raw": "{{url}}/admin/coaches/{{coach_id}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"admin",
-								"todos",
-								"{{todo_id}}"
+								"coaches",
+								"{{coach_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{jwt}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Request",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    const jsonData = JSON.parse(responseBody);\r",
+									"    pm.collectionVariables.set(\"request_id\", jsonData.data.id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"message\": \"It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/requests/{{coach_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"requests",
+								"{{coach_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Many",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/requests/{{coach_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"requests",
+								"{{coach_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/requests/{{coach_id}}/{{request_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"requests",
+								"{{coach_id}}",
+								"{{request_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"message\": \"Bacon ipsum dolor amet kevin doner pork chop short loin beef ribs.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/requests/{{coach_id}}/{{request_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"requests",
+								"{{coach_id}}",
+								"{{request_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    pm.collectionVariables.unset(\"request_id\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/admin/requests/{{coach_id}}/{{request_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"requests",
+								"{{coach_id}}",
+								"{{request_id}}"
 							]
 						}
 					},
@@ -344,12 +530,16 @@
 			"value": "http://localhost:9000"
 		},
 		{
-			"key": "jwt",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWljaGFlbCBTY290dCIsImVtYWlsIjoibWljaGFlbEBlbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJtZSI6InFLa2VZcG1KeFFMaUhESlFqZkFCIiwiaWF0IjoxNjcxMjk2MDM3LCJleHAiOjE2NzEyOTY5Mzd9.VLnlICN9xkCPJKUlSZPloOYJFypJKHBPhg89RUrRPfA"
-		},
-		{
 			"key": "todo_id",
 			"value": "iaXG9YGAs9CQAyKOTFNT"
+		},
+		{
+			"key": "jwt",
+			"value": ""
+		},
+		{
+			"key": "coach_id",
+			"value": ""
 		}
 	]
 }

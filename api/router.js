@@ -6,7 +6,7 @@ const {
   loading,
   notFound,
 } = require('./middleware');
-const { coach, identity } = require('./routes');
+const { coach, identity, request } = require('./routes');
 
 const router = Router();
 
@@ -21,6 +21,7 @@ router.use(error);
 // use the router instances defined
 router.use(coach);
 router.use(identity);
+router.use(request);
 
 // matches any other HTTP method and route not matched before
 router.all('*', notFound);

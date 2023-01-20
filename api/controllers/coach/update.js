@@ -26,8 +26,8 @@ module.exports = async (req, res) => {
 
   const db = initializeFirestore();
   const coachRef = db.collection('coaches').doc(coachId);
-  const coachSnapshot = await coachRef.get();
-  if (!coachSnapshot.exists) {
+  let doc = await coachRef.get();
+  if (!doc.exists) {
     throw error(404, 'Coach not found');
   }
 
@@ -58,7 +58,7 @@ module.exports = async (req, res) => {
     }
   }
   await coachRef.update({ ...updates, updatedAt: new Date() });
-  const doc = await coachRef.get();
+  doc = await coachRef.get();
   const data = doc.data();
   data.id = doc.id;
 

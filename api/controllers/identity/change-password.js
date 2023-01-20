@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
 
   await identityRef.update({
     password: hashSync(changePassword),
+    updatedAt: new Date(),
   });
 
   const data = (await identityRef.get()).data();

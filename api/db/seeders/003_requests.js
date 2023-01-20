@@ -13,9 +13,9 @@ exports.seed = async () => {
       const coachData = coach.data();
       return { id: coach.id, ...coachData };
     });
-    let batch = db.batch();
+    const batch = db.batch();
     seeds.forEach((seed, index) => {
-      let ref = db
+      const ref = db
         .collection('requests')
         .doc(coachesData[index % coachesData.length].id)
         .collection('messages')
