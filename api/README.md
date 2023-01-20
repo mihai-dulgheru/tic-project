@@ -4,8 +4,6 @@ Starter for Node Express API projects with Firestore database.
 
 ## Documentation and wiki
 
-Refer to the `examples` folder for code examples regarding controllers, routes and seeds for "to do" items.
-
 ## Quick start
 
 Install dependencies

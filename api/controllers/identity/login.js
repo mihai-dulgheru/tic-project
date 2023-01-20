@@ -44,8 +44,8 @@ module.exports = async (req, res) => {
     algorithm: 'HS256',
   });
 
-  // set refresk token as cookie
-  const oneDay = 24 * 3600 * 1000;
+  // set refresh token as cookie
+  const oneDay = 1 * 24 * 60 * 60 * 1000;
   res.cookie('jwt_refresh_token', refreshToken, {
     httpOnly: true,
     maxAge: oneDay,

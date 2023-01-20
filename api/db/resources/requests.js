@@ -5,14 +5,17 @@ module.exports = async () => {
     {
       email: chance.email(),
       message: chance.paragraph(),
+      createdAt: new Date(),
     },
     {
       email: chance.email(),
       message: chance.paragraph(),
+      createdAt: new Date(),
     },
     {
       email: chance.email(),
       message: chance.paragraph(),
+      createdAt: new Date(),
     },
   ];
 };

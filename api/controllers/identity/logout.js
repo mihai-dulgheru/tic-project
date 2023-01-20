@@ -1,6 +1,6 @@
-module.exports = async (req, res) => {
+module.exports = async (_req, res) => {
   const secure = process.env.NODE_ENV === 'production';
-  const now = new Date(0);
+  const now = new Date();
   res.cookie('jwt_refresh_token', '', {
     httpOnly: true,
     maxAge: now,

@@ -10,18 +10,21 @@ module.exports = async () => {
       name: 'Michael Scott',
       password: hashSync('supersecretpassword'),
       role: 'admin',
+      createdAt: new Date(),
     },
     {
       email: chance.email(),
       name: chance.name(),
       password: hashSync('supersecretpassword'),
       role: chance.pickone(roles),
+      createdAt: new Date(),
     },
     {
       email: chance.email(),
       name: chance.name(),
       password: hashSync('supersecretpassword'),
       role: chance.pickone(roles),
+      createdAt: new Date(),
     },
   ];
 };
