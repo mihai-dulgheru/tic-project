@@ -3,8 +3,6 @@ const readMany = require('./read-many');
 const readOne = require('./read-one');
 const remove = require('./remove');
 const update = require('./update');
-const check = require('./check');
-const uncheck = require('./uncheck');
 
 module.exports = {
   create,
@@ -12,6 +10,4 @@ module.exports = {
   readOne,
   remove,
   update,
-  check,
-  uncheck,
 };
