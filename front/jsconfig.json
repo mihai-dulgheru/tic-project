@@ -5,8 +5,6 @@
     "baseUrl": "./",
     "moduleResolution": "node",
     "paths": {
-      "api/*": ["api/*"],
-      "lib/*": ["lib/*"],
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]

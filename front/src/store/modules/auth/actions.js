@@ -1,29 +1,49 @@
+import { login } from "/api/auth";
+
 let timer;
 
 export default {
   async auth(context, payload) {
     const mode = payload.mode;
-    let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCVNv_RN_9-WWTy3W_WtDu_ULmcaGzkqvc";
-    if (mode === "signup") {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCVNv_RN_9-WWTy3W_WtDu_ULmcaGzkqvc";
-    }
-    const response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        email: payload.email,
-        password: payload.password,
-        returnSecureToken: true,
-      }),
-    });
-    const responseData = await response.json();
-    console.log(response, responseData);
-    if (!response.ok) {
-      const error = new Error(
-        responseData.message || "Failed to authenticate."
-      );
-      throw error;
+    // let url =
+    //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCVNv_RN_9-WWTy3W_WtDu_ULmcaGzkqvc";
+    // if (mode === "signup") {
+    //   url =
+    //     "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCVNv_RN_9-WWTy3W_WtDu_ULmcaGzkqvc";
+    // }
+    // const response = await fetch(url, {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     email: payload.email,
+    //     password: payload.password,
+    //     returnSecureToken: true,
+    //   }),
+    // });
+    // const responseData = await response.json();
+    // console.log(response, responseData);
+    // if (!response.ok) {
+    //   const error = new Error(
+    //     responseData.message || "Failed to authenticate."
+    //   );
+    //   throw error;
+    // }
+
+    // const payload = {
+    //   email: payload.email,
+    //   password: payload.password,
+    //   returnSecureToken: true,
+    // };
+
+    let responseData;
+    switch (mode) {
+      case "login":
+        responseData = await login(payload);
+        break;
+      case "signup":
+        // responseData = await signup(payload);
+        break;
+      default:
+        break;
     }
 
     const expiresIn = +responseData.expiresIn * 1000;
