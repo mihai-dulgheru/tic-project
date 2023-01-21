@@ -1,4 +1,4 @@
-import { login } from "/api/auth";
+import { login } from "../../../../api/auth";
 
 let timer;
 
@@ -28,19 +28,19 @@ export default {
     //   throw error;
     // }
 
-    // const payload = {
-    //   email: payload.email,
-    //   password: payload.password,
-    //   returnSecureToken: true,
-    // };
+    const data = {
+      email: payload.email,
+      password: payload.password,
+      returnSecureToken: true,
+    };
 
     let responseData;
     switch (mode) {
       case "login":
-        responseData = await login(payload);
+        responseData = await login(data);
         break;
       case "signup":
-        // responseData = await signup(payload);
+        // responseData = await signup(data);
         break;
       default:
         break;

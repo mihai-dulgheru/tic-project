@@ -1,8 +1,8 @@
-import { createCoach, readCoaches } from "/api/coaches";
+import { createCoach, readCoaches } from "../../../../api/coaches";
 
 export default {
   async registerCoach(context, payload) {
-    // const userId = context.rootGetters.userId;
+    const userId = context.rootGetters.userId;
     const coachData = {
       areas: payload.areas,
       description: payload.description,
@@ -29,13 +29,12 @@ export default {
     //   id: userId,
     // });
     const coach = await createCoach(coachData);
-    console.log(coach);
-    // if (coach) {
-    //   context.commit("registerCoach", {
-    //     ...coachData,
-    //     id: userId,
-    //   });
-    // }
+    if (coach) {
+      context.commit("registerCoach", {
+        ...coachData,
+        id: userId,
+      });
+    }
   },
 
   async loadCoaches(context, payload) {

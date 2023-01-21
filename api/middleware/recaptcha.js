@@ -1,9 +1,9 @@
 const axios = require('axios');
 const { error } = require('../functions');
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, _res, next) => {
   try {
-    // allow requests with no origin from postman / others
+    // allow requests with no origin from postman
     if (!req.headers.origin) {
       return next();
     }
@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
     }
 
     const recaptcha = await axios({
-      method: 'post',
+      method: 'POST',
       url: 'https://www.recaptcha.net/recaptcha/api/siteverify',
       params: {
         secret: process.env.RECAPTCHA_SECRET,

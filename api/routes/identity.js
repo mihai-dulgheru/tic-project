@@ -11,7 +11,8 @@ router.post(
   validate(identitySchema),
   Identity.changePassword
 );
-router.post('/login', recaptcha, Identity.login);
+// router.post('/login', recaptcha, Identity.login);
+router.post('/login', Identity.login);
 router.post('/logout', Identity.logout);
 router.post('/refresh-token', Identity.refreshToken);
 

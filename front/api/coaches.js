@@ -1,4 +1,4 @@
-import { axios, axiosAuth } from "/lib";
+import { axios, axiosAuth } from "../lib";
 
 export const readCoaches = async () => {
   return await axios.get("/coaches");
