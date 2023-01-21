@@ -1,3 +1,5 @@
+import { getCoaches } from "../../../../api/coaches";
+
 export default {
   async registerCoach(context, payload) {
     const userId = context.rootGetters.userId;
@@ -31,9 +33,11 @@ export default {
     if (!payload?.forceRefresh && !context.getters.shouldUpdate) {
       return;
     }
-    const response = await fetch(
-      `https://vue-http-demo-37d43-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
-    );
+    // TODO: use the API
+    // const response = await fetch(
+    //   `https://vue-http-demo-37d43-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+    // );
+    const response = await getCoaches();
     const responseData = await response.json();
     if (!response.ok) {
       const error = new Error(responseData.message || "Failed to fetch data.");
