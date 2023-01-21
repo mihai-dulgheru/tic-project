@@ -54,5 +54,14 @@ module.exports = async (req, res) => {
     signed: true,
   });
 
-  return res.status(200).json({ token, message: 'Authentication successful' });
+  return res.status(200).json({
+    displayName: name,
+    email,
+    expiresIn: 3600,
+    idToken: token,
+    kind: 'identitytoolkit#VerifyPasswordResponse',
+    localId: 'Zmia7sTe0lTu0MlkfV9L2qPkhnz1',
+    refreshToken,
+    registered: true,
+  });
 };
