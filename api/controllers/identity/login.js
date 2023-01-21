@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
     expiresIn: 3600,
     idToken: token,
     kind: 'identitytoolkit#VerifyPasswordResponse',
-    localId: 'Zmia7sTe0lTu0MlkfV9L2qPkhnz1',
+    localId: id,
     refreshToken,
     registered: true,
   });
