@@ -32,5 +32,9 @@ module.exports = async (req, res) => {
   const data = (await response.get()).data();
   data.id = response.id;
 
-  return res.status(200).json({ data, message: 'Coach created successfully' });
+  return res.status(200).json({
+    data,
+    message: 'Coach created successfully',
+    success: true,
+  });
 };
