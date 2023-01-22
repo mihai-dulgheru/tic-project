@@ -1,4 +1,4 @@
-import { login } from "../../../../api/auth";
+import { login } from "@/api/auth";
 
 let timer;
 
@@ -35,15 +35,19 @@ export default {
     };
 
     let responseData;
-    switch (mode) {
-      case "login":
-        responseData = await login(data);
-        break;
-      case "signup":
-        // responseData = await signup(data);
-        break;
-      default:
-        break;
+    try {
+      switch (mode) {
+        case "login":
+          responseData = await login(data);
+          break;
+        case "signup":
+          // responseData = await signup(data);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      throw new Error(error?.message || "Failed to authenticate.");
     }
 
     const expiresIn = +responseData.expiresIn * 1000;

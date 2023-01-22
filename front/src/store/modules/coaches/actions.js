@@ -1,4 +1,4 @@
-import { createCoach, readCoaches } from "../../../../api/coaches";
+import { createCoach, readCoaches } from "@/api/coaches";
 
 export default {
   async registerCoach(context, payload) {
@@ -28,12 +28,16 @@ export default {
     //   ...coachData,
     //   id: userId,
     // });
-    const coach = await createCoach(coachData);
-    if (coach) {
-      context.commit("registerCoach", {
-        ...coachData,
-        id: userId,
-      });
+    try {
+      const coach = await createCoach(coachData);
+      if (coach) {
+        context.commit("registerCoach", {
+          ...coachData,
+          id: userId,
+        });
+      }
+    } catch (error) {
+      throw new Error(error?.message || "Failed to register as a coach.");
     }
   },
 
