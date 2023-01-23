@@ -35,5 +35,5 @@ module.exports = async (req, res) => {
 
   return res
     .status(200)
-    .json({ data, message: 'Request created successfully' });
+    .json({ data, message: 'Request created successfully', success: true });
 };

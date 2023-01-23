@@ -8,7 +8,7 @@ exports.seed = async () => {
 
     const seeds = await requests();
     const db = initializeFirestore();
-    const coaches = await db.collection('coaches').get();
+    const coaches = await db.collection('coaches').orderBy('createdAt').get();
     const coachesData = coaches.docs.map((coach) => {
       const coachData = coach.data();
       return { id: coach.id, ...coachData };

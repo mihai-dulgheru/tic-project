@@ -9,7 +9,7 @@ module.exports = yup.object().shape({
     .required()
     .label('Areas'),
   description: yup.string().required().label('Description'),
-  email: yup.string().email().required().label('Email'),
+  email: yup.string().email().label('Email'),
   firstName: yup.string().required().label('First Name'),
   hourlyRate: yup.number().min(10).max(100).required().label('Hourly Rate'),
   lastName: yup.string().required().label('Last Name'),

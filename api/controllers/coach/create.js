@@ -1,36 +1,41 @@
 const { error, initializeFirestore } = require('../../functions');
 
 module.exports = async (req, res) => {
-  const { me } = req.user;
-  if (!me) {
+  const { email, me } = req.user;
+  if (!email || !me) {
     throw error(404, 'Missing required params');
   }
 
-  const { areas, description, email, firstName, hourlyRate, lastName } =
-    req.body;
   const db = initializeFirestore();
   const coachesRef = db.collection('coaches');
-  const snapshot = await coachesRef.where('email', '==', email).get();
-  if (snapshot.size) {
-    throw error(409, 'A coach with this email already exists');
+  const coachRef = coachesRef.doc(me);
+  if ((await coachRef.get()).exists) {
+    throw error(409, 'Coach already exists');
   }
 
+  const { areas, description, firstName, hourlyRate, lastName } = req.body;
   const payload = {
     areas,
     description: description.trim(),
-    email: email.trim(),
+    email,
     firstName: firstName.trim(),
     hourlyRate,
     lastName: lastName.trim(),
     createdAt: new Date(),
   };
 
-  const response = await coachesRef.add(payload);
-  if (!response.id) {
-    throw error(500, 'Failed to create coach');
+  try {
+    await coachRef.set(payload);
+  } catch (error) {
+    throw error(500, 'Error creating coach');
   }
-  const data = (await response.get()).data();
-  data.id = response.id;
+
+  const doc = await coachRef.get();
+  if (!doc.exists) {
+    throw error(404, 'Coach not found');
+  }
+  const data = doc.data();
+  data.id = doc.id;
 
   return res.status(200).json({
     data,

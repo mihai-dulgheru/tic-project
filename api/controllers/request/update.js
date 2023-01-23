@@ -52,5 +52,5 @@ module.exports = async (req, res) => {
 
   return res
     .status(200)
-    .json({ data, message: 'Request updated successfully' });
+    .json({ data, message: 'Request updated successfully', success: true });
 };

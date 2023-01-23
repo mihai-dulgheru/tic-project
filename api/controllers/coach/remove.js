@@ -17,5 +17,7 @@ module.exports = async (req, res) => {
   data.id = doc.id;
   await coachRef.delete();
 
-  return res.status(200).json({ data, message: 'Coach removed successfully' });
+  return res
+    .status(200)
+    .json({ data, message: 'Coach removed successfully', success: true });
 };

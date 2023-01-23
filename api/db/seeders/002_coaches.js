@@ -9,7 +9,8 @@ exports.seed = async () => {
     const seeds = await coaches();
     const db = initializeFirestore();
     for (const seed of seeds) {
-      await db.collection('coaches').add(seed);
+      const { id, ...data } = seed;
+      await db.collection('coaches').doc(id).set(data);
     }
 
     console.log('✓');

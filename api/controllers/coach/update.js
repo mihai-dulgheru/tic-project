@@ -62,5 +62,7 @@ module.exports = async (req, res) => {
   const data = doc.data();
   data.id = doc.id;
 
-  return res.status(200).json({ data, message: 'Coach updated successfully' });
+  return res
+    .status(200)
+    .json({ data, message: 'Coach updated successfully', success: true });
 };

@@ -6,8 +6,8 @@ module.exports = async () => {
 
   return [
     {
-      email: 'michael@email.com',
-      name: 'Michael Scott',
+      email: 'mihai@email.com',
+      name: 'Mihai-Nicolae Dulgheru',
       password: hashSync('supersecretpassword'),
       role: 'admin',
       createdAt: new Date(),
