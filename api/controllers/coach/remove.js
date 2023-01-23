@@ -17,6 +17,18 @@ module.exports = async (req, res) => {
   data.id = doc.id;
   await coachRef.delete();
 
+  const requestsRef = db
+    .collection('requests')
+    .doc(coachId)
+    .collection('messages');
+  const snapshot = await requestsRef.get();
+  const batch = db.batch();
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+  await db.collection('requests').doc(coachId).delete();
+
   return res
     .status(200)
     .json({ data, message: 'Coach removed successfully', success: true });
