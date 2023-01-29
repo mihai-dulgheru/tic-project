@@ -45,23 +45,32 @@ export default {
   },
   computed: {
     fullName() {
-      return `${this.selectedCoach.firstName} ${this.selectedCoach.lastName}`;
+      return `${this.selectedCoach?.firstName || ""} ${
+        this.selectedCoach?.lastName || ""
+      }`;
     },
     rate() {
-      return this.selectedCoach.hourlyRate.toFixed(2);
+      return (this.selectedCoach?.hourlyRate || 0).toFixed(2);
     },
     contactLink() {
       return `/coaches/${this.id}/contact`;
     },
     areas() {
-      return this.selectedCoach.areas;
+      return this.selectedCoach?.areas || [];
     },
     description() {
-      return this.selectedCoach.description;
+      return this.selectedCoach?.description || "";
+    },
+  },
+  methods: {
+    async getCoach(id) {
+      this.selectedCoach = await this.$store.dispatch("coaches/loadCoach", {
+        id,
+      });
     },
   },
   created() {
-    this.selectedCoach = this.$store.getters["coaches/getCoachById"](this.id);
+    this.getCoach(this.id);
   },
 };
 </script>

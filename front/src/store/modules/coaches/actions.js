@@ -1,4 +1,4 @@
-import { createCoach, readCoaches } from "@/api/coaches";
+import { createCoach, readCoach, readCoaches } from "@/api/coaches";
 
 export default {
   async registerCoach(context, payload) {
@@ -45,7 +45,6 @@ export default {
     if (!payload?.forceRefresh && !context.getters.shouldUpdate) {
       return;
     }
-    // TODO: use the API
     // const response = await fetch(
     //   `https://vue-http-demo-37d43-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
     // );
@@ -69,5 +68,12 @@ export default {
     const coaches = await readCoaches();
     context.commit("setCoaches", coaches);
     context.commit("setFetchTimestamp");
+  },
+
+  async loadCoach(context, payload) {
+    const { id } = payload;
+    return (
+      context.rootGetters["coaches/getCoachById"](id) || (await readCoach(id))
+    );
   },
 };

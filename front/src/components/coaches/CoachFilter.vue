@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     xmarkIsVisible() {
-      return this.filters.name.length > 0;
+      return this.filters.name?.length > 0 || false;
     },
   },
 };

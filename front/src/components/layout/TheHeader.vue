@@ -11,7 +11,6 @@
         <li v-if="isLoggedIn">
           <router-link to="/requests">Requests</router-link>
         </li>
-        <!-- TODO -->
         <li v-if="isLoggedIn">
           <router-link to="/profile">Profile</router-link>
         </li>

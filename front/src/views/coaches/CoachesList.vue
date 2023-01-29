@@ -74,21 +74,22 @@ export default {
   },
   computed: {
     filteredCoaches() {
-      const coaches = this.$store.getters["coaches/coaches"];
-      const activeFilters = this.activeFilters;
+      const coaches = this.$store.getters["coaches/coaches"] || [];
+      const activeFilters = this.activeFilters || {};
       return coaches.filter((coach) => {
-        const { areas } = coach;
-        const name = `${coach.firstName} ${coach.lastName}`.toLowerCase();
-        const nameReverse =
-          `${coach.lastName} ${coach.firstName}`.toLowerCase();
+        const { areas = [], firstName = "", lastName = "" } = coach || {};
+        const name = `${firstName} ${lastName}`.toLowerCase();
+        const nameReverse = `${lastName} ${firstName}`.toLowerCase();
         return (
-          ((activeFilters.frontend && areas.includes("frontend")) ||
-            (activeFilters.backend && areas.includes("backend")) ||
-            (activeFilters.career && areas.includes("career"))) &&
-          (name.toLowerCase().includes(activeFilters.name.toLowerCase()) ||
-            nameReverse
-              .toLowerCase()
-              .includes(activeFilters.name.toLowerCase()))
+          ((activeFilters.frontend && areas?.includes("frontend")) ||
+            (activeFilters.backend && areas?.includes("backend")) ||
+            (activeFilters.career && areas?.includes("career"))) &&
+          (!activeFilters.name ||
+            (activeFilters.name &&
+              (name.toLowerCase().includes(activeFilters.name.toLowerCase()) ||
+                nameReverse
+                  .toLowerCase()
+                  .includes(activeFilters.name.toLowerCase()))))
         );
       });
     },
