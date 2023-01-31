@@ -15,5 +15,6 @@ router.post(
 router.post('/login', Identity.login);
 router.post('/logout', Identity.logout);
 router.post('/refresh-token', Identity.refreshToken);
+router.post('/signup', Identity.signup);
 
 module.exports = router;

@@ -1,38 +1,37 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { error, initializeFirestore } = require('../../functions');
+const { hashSync } = require('bcryptjs');
 
 module.exports = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw error(400, 'Missing required params');
+    throw error(404, 'Missing required params');
   }
 
   const db = initializeFirestore();
   const identitiesRef = db.collection('identities');
   const snapshot = await identitiesRef.where('email', '==', email).get();
-  if (snapshot.empty) {
-    throw error(400, 'No matching documents.');
+  if (!snapshot.empty) {
+    throw error(409, 'Identity already exists');
   }
 
-  const documents = [];
-  snapshot.forEach((doc) => {
-    documents.push({ ...doc.data(), id: doc.id });
-  });
+  const payload = {
+    email,
+    name: '',
+    password: hashSync(password),
+    role: 'client',
+    createdAt: new Date(),
+  };
 
-  const identity = documents[0];
-  if (!identity) {
-    throw error(400, 'Your email or password are invalid');
+  const doc = await identitiesRef.add(payload);
+  const { id } = doc;
+  if (!id) {
+    throw error(500, 'Error creating identity');
   }
 
-  const { id, name, password: passwordFromDb, role } = identity;
-  const passwordsMatch = await bcrypt.compare(password, passwordFromDb);
-  if (!passwordsMatch) {
-    throw error(400, 'Your username or password are invalid');
-  }
-
-  // the JWT public data payload
-  const payload = { name, email, role, me: id };
+  delete payload.createdAt;
+  delete payload.password;
+  payload.me = id;
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     algorithm: 'HS256',
@@ -44,7 +43,6 @@ module.exports = async (req, res) => {
     expiresIn: '60m',
   });
 
-  // set refresh token as cookie
   const oneDay = 1 * 24 * 60 * 60 * 1000;
   res.cookie('jwt_refresh_token', refreshToken, {
     httpOnly: true,
@@ -55,13 +53,10 @@ module.exports = async (req, res) => {
   });
 
   return res.status(200).json({
-    displayName: name,
     email,
     expiresIn: 3600,
     idToken: token,
-    kind: 'identitytoolkit#VerifyPasswordResponse',
     localId: id,
     refreshToken,
-    registered: true,
   });
 };
