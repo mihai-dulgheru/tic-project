@@ -9,3 +9,13 @@ export const login = async (data) => {
 
   return response;
 };
+
+export const signup = async (data) => {
+  const response = await axios.post("/signup", data);
+
+  if (!response?.idToken) {
+    throw new Error("Failed to signup.");
+  }
+
+  return response;
+};
