@@ -21,10 +21,12 @@
         <p v-if="!formIsValid">
           Please enter a valid email and password (at least 6 characters).
         </p>
-        <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchMode">{{
-          switchModeButtonCaption
-        }}</base-button>
+        <div class="form-actions">
+          <base-button>{{ submitButtonCaption }}</base-button>
+          <a class="form-switch" @click="switchMode">{{
+            switchModeButtonCaption
+          }}</a>
+        </div>
       </form>
     </base-card>
   </main>
@@ -122,5 +124,21 @@ textarea:focus {
   background-color: var(--bg-focus);
   border-color: var(--primary);
   outline: none;
+}
+
+.form-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-switch {
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.form-switch:hover {
+  text-decoration: underline;
 }
 </style>

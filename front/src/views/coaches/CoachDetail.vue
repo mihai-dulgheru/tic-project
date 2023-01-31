@@ -50,7 +50,7 @@ export default {
       }`;
     },
     rate() {
-      return (this.selectedCoach?.hourlyRate || 0).toFixed(2);
+      return Math.round((this.selectedCoach?.hourlyRate || 0) * 100) / 100;
     },
     contactLink() {
       return `/coaches/${this.id}/contact`;

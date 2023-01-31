@@ -49,7 +49,7 @@ export default {
       return `${this.firstName} ${this.lastName}`;
     },
     rate() {
-      return this.hourlyRate.toFixed(2);
+      return Math.round(this.hourlyRate * 100) / 100;
     },
     coachContactLink() {
       return `${this.$route.path}/${this.id}/contact`;
