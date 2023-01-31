@@ -16,13 +16,6 @@
           <base-button mode="outline" @click="loadCoaches(true)">
             <i class="fa-solid fa-arrows-rotate"></i>
           </base-button>
-          <!-- TODO -->
-          <!-- <base-button v-if="!isLoggedIn" link to="/auth?redirect=register"
-            >Login to Register as Coach</base-button
-          >
-          <base-button v-else-if="!isLoading && !isCoach" link to="/register"
-            >Register as Coach</base-button
-          > -->
           <base-button
             v-if="isLoggedIn && !isCoach && !isLoading"
             link
