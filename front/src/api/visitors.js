@@ -10,3 +10,7 @@ export const createRequest = async (payload) => {
 
   return response;
 };
+
+export const readRequests = async (coachId) => {
+  return await axios.get(`/requests/${coachId}`);
+};

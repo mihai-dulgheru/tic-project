@@ -1,18 +1,21 @@
+import { getProfile, updateProfile } from "@/api/profile";
+
 export default {
-  fetchProfile(context) {
-    const profile = {
-      email: "test@test.com",
-      name: "Test Test",
-      role: "admin",
-    };
+  async fetchProfile(context) {
+    const profile = await getProfile();
     context.commit("setProfile", profile);
   },
-  saveProfile(context, payload) {
-    const profile = {
-      email: payload.email,
-      name: payload.name,
-      role: payload.role,
-    };
-    context.commit("setProfile", profile);
+  async saveProfile(context, payload) {
+    try {
+      const profile = await updateProfile({
+        email: payload?.email || "",
+        name: payload?.name || "",
+      });
+      if (profile) {
+        context.commit("setProfile", profile?.data || {});
+      }
+    } catch (error) {
+      throw new Error(error?.message || "Failed to update profile.");
+    }
   },
 };

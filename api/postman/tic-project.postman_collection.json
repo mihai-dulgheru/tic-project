@@ -163,6 +163,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mihai@email.com\",\r\n    \"name\": \"Mihai-Nicolae Dulgheru\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"profile"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {

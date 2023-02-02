@@ -37,6 +37,16 @@ module.exports = async (req, res) => {
   const data = doc.data();
   data.id = doc.id;
 
+  const identityRef = db.collection('identities').doc(me);
+  if (!(await identityRef.get()).exists) {
+    throw error(404, 'Account not found');
+  }
+
+  await identityRef.update({
+    role: 'admin',
+    updatedAt: new Date(),
+  });
+
   return res.status(200).json({
     data,
     message: 'Coach created successfully',

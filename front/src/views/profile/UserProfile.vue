@@ -1,9 +1,12 @@
 <template>
   <main>
+    <base-dialog :show="!!success" @close="handleSuccess" title="Success!">
+      <p>{{ success }}</p>
+    </base-dialog>
     <base-dialog
       :show="!!error"
-      title="An Error Occurred!"
       @close="handleError"
+      title="An Error Occurred!"
     >
       <p>{{ error }}</p>
     </base-dialog>
@@ -22,36 +25,53 @@
               <label for="email">Email</label>
               <input type="email" id="email" v-model.trim="email" />
             </div>
-            <div class="form-control">
-              <h2>Role</h2>
-              <div class="roles">
-                <div>
-                  <input
-                    id="role-admin"
-                    name="role"
-                    type="radio"
-                    v-model="role"
-                    value="admin"
-                  />
-                  <label for="role-admin">Admin</label>
-                </div>
-                <div>
-                  <input
-                    id="role-client"
-                    name="role"
-                    type="radio"
-                    v-model="role"
-                    value="client"
-                  />
-                  <label for="role-client">Client</label>
-                </div>
-              </div>
-            </div>
             <div class="actions">
               <base-button>Save</base-button>
             </div>
           </form>
         </div>
+      </base-card>
+    </section>
+
+    <section>
+      <base-card>
+        <header>
+          <h2>Change password</h2>
+        </header>
+        <div>
+          <form @submit.prevent="submitPasswordForm">
+            <div class="form-control">
+              <label for="password">Password</label>
+              <input type="password" id="password" v-model.trim="password" />
+            </div>
+            <div class="form-control">
+              <label for="confirmPassword">Confirm password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                v-model.trim="confirmPassword"
+              />
+            </div>
+            <div class="actions">
+              <base-button>Change password</base-button>
+            </div>
+          </form>
+        </div>
+      </base-card>
+    </section>
+
+    <section>
+      <base-card>
+        <div class="subhead subhead--spacious">
+          <h2 class="subhead-heading subhead-heading--danger">
+            Delete account
+          </h2>
+        </div>
+        <p>
+          Once you delete your account, there is no going back. Please be
+          certain.
+        </p>
+        <button class="button button-danger">Delete your account</button>
       </base-card>
     </section>
   </main>
@@ -64,15 +84,15 @@ export default {
   name: "UserProfile",
   data() {
     return {
-      isLoading: false,
       error: null,
+      isLoading: false,
+      success: null,
     };
   },
   computed: {
     ...mapGetters({
       email: "profile/email",
       name: "profile/name",
-      role: "profile/role",
     }),
   },
   created() {
@@ -89,14 +109,21 @@ export default {
       this.isLoading = false;
     },
     async submitForm() {
-      this.$store.dispatch("profile/saveProfile", {
-        name: this.name,
-        email: this.email,
-        role: this.role,
-      });
+      try {
+        this.$store.dispatch("profile/saveProfile", {
+          name: this.name,
+          email: this.email,
+        });
+        this.success = "Profile saved successfully!";
+      } catch (error) {
+        this.error = error.message || "Something went wrong!";
+      }
     },
     handleError() {
       this.error = null;
+    },
+    handleSuccess() {
+      this.success = null;
     },
   },
 };
@@ -111,7 +138,7 @@ h2 {
   margin: 0;
 }
 form {
-  border-radius: 12px;
+  border-radius: 0.75rem;
   border: 1px solid var(--light);
   margin: 1rem;
   padding: 1rem;
@@ -154,17 +181,47 @@ textarea:focus {
 .actions {
   text-align: center;
 }
-.roles {
+.subhead {
+  border-bottom: 1px solid #e1e4e8;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  column-gap: 0.5rem;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
-.roles div label {
-  display: flex;
-  align-items: center;
-  justify-self: flex-start;
-  margin: 0;
+.subhead--spacious {
+  margin-top: 0.5rem;
+}
+.subhead-heading {
+  flex: 1 1 auto;
+  font-size: 1.5rem;
+  font-weight: 400;
+  order: 0;
+}
+.subhead-heading--danger {
+  color: #f85149;
+  font-weight: 600;
+}
+.button {
+  border-radius: 0.375rem;
+  border: 1px solid;
+  box-shadow: 0 0 transparent, 0 0 transparent;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  padding: 0.375rem 1rem;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.button-danger {
+  background-color: #ffffff;
+  color: #f85149;
+}
+.button-danger:hover {
+  background-color: #f85149;
+  color: #ffffff;
 }
 </style>
