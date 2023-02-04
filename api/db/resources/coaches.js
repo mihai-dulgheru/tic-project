@@ -13,6 +13,16 @@ module.exports = async () => {
 
   return [
     {
+      id: identitiesData[0].id,
+      areas: areas,
+      description: chance.paragraph(),
+      email: 'mihai@email.com',
+      firstName: 'Mihai-Nicolae',
+      hourlyRate: chance.integer({ min: 10, max: 100 }),
+      lastName: 'Dulgheru',
+      createdAt: new Date(),
+    },
+    {
       id: identitiesData[1].id,
       areas: chance.pickset(areas, 2),
       description: chance.paragraph(),

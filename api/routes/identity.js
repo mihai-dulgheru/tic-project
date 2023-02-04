@@ -5,6 +5,7 @@ const { validate } = require('../middleware');
 
 const router = Router();
 
+router.delete('/admin/account', Identity.deleteAccount);
 router.get('/admin/profile', Identity.profile);
 router.patch('/admin/profile', Identity.updateProfile);
 router.post(

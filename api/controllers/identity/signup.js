@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
 
   return res.status(200).json({
     email,
-    expiresIn: 3600,
+    expiresIn: 15 * 60 * 1000,
     idToken: token,
     localId: id,
     refreshToken,

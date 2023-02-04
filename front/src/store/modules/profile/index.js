@@ -6,9 +6,9 @@ export default {
   namespaced: true,
   state() {
     return {
-      email: "",
-      name: "",
-      role: "",
+      email: null,
+      name: null,
+      role: null,
     };
   },
   actions,

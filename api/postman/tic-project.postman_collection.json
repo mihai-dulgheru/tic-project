@@ -144,7 +144,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"changePassword\": \"supersecretpassword\",\r\n    \"confirmPassword\": \"supersecretpassword\"\r\n}",
+							"raw": "{\r\n    \"password\": \"supersecretpassword\",\r\n    \"confirmPassword\": \"supersecretpassword\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,6 +186,24 @@
 							"path": [
 								"admin",
 								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/admin/account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"account"
 							]
 						}
 					},
@@ -602,11 +620,11 @@
 			"value": "iaXG9YGAs9CQAyKOTFNT"
 		},
 		{
-			"key": "jwt",
+			"key": "coach_id",
 			"value": ""
 		},
 		{
-			"key": "coach_id",
+			"key": "jwt",
 			"value": ""
 		}
 	]

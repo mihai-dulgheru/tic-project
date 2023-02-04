@@ -1,4 +1,3 @@
-import store from "@/store";
 import axios from "axios";
 
 const Axios = axios.create({
@@ -8,7 +7,7 @@ const Axios = axios.create({
 });
 
 const withBearer = (req) => {
-  req.headers.authorization = `Bearer ${store.state.auth.token}`;
+  req.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
   return req;
 };
 

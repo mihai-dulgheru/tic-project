@@ -6,12 +6,12 @@ module.exports = async (req, res) => {
     throw error(404, 'Missing required params');
   }
 
-  const { changePassword, confirmPassword } = req.body;
-  if (!changePassword || !confirmPassword) {
+  const { password, confirmPassword } = req.body;
+  if (!password || !confirmPassword) {
     throw error(400, 'Missing required params');
   }
 
-  if (changePassword !== confirmPassword) {
+  if (password !== confirmPassword) {
     throw error(400, 'Passwords do not match');
   }
 
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
   }
 
   await identityRef.update({
-    password: hashSync(changePassword),
+    password: hashSync(password),
     updatedAt: new Date(),
   });
 
@@ -32,5 +32,6 @@ module.exports = async (req, res) => {
   return res.status(200).json({
     data,
     message: 'Password was changed successfully',
+    success: true,
   });
 };

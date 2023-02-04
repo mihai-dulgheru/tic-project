@@ -16,7 +16,10 @@
         </div>
         <div class="form-control">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model.trim="password" />
+          <password-input
+            id="password"
+            v-model:password="password"
+          ></password-input>
         </div>
         <p v-if="!formIsValid">
           Please enter a valid email and password (at least 6 characters).
@@ -33,8 +36,13 @@
 </template>
 
 <script>
+import PasswordInput from "@/components/ui/PasswordInput.vue";
+
 export default {
   name: "UserAuth",
+  components: {
+    PasswordInput,
+  },
   data() {
     return {
       email: null,
@@ -108,15 +116,16 @@ form {
 }
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 input,
 textarea {
+  border-radius: 0.25rem;
   border: 1px solid var(--light);
   display: block;
   font: inherit;
-  padding: 0.15rem;
+  padding: 0.5rem;
   width: 100%;
 }
 input:focus,

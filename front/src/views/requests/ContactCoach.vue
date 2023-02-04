@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 form {
-  border-radius: 12px;
+  border-radius: 0.75rem;
   border: 1px solid var(--light);
   margin: 1rem;
   padding: 1rem;
@@ -80,15 +80,16 @@ form {
 }
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 input,
 textarea {
+  border-radius: 0.25rem;
   border: 1px solid var(--light);
   display: block;
   font: inherit;
-  padding: 0.15rem;
+  padding: 0.5rem;
   width: 100%;
 }
 input:focus,
@@ -98,8 +99,8 @@ textarea:focus {
   outline: none;
 }
 .errors {
-  color: red;
-  font-weight: bold;
+  color: var(--error);
+  font-weight: 700;
 }
 .actions {
   text-align: center;

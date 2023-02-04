@@ -30,13 +30,14 @@ export default {
 
 <style scoped>
 li {
+  border-radius: 0.25rem;
   border: 1px solid var(--light);
   margin: 1rem 0;
   padding: 1rem;
 }
 a {
   color: var(--primary);
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
 }
 a:hover,

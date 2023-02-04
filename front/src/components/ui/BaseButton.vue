@@ -39,8 +39,7 @@ a {
   background-color: var(--primary);
   border-radius: 1.875rem;
   border: 1px solid var(--primary);
-  /* color: #080808; */
-  color: white;
+  color: hsl(0, 0%, 100%);
   cursor: pointer;
   display: inline-block;
   font: inherit;
@@ -54,7 +53,7 @@ button:hover,
 button:active {
   background-color: var(--dark);
   border-color: var(--dark);
-  color: white;
+  color: hsl(0, 0%, 100%);
 }
 .flat {
   background-color: transparent;
@@ -72,7 +71,6 @@ button:active {
 .outline:active {
   background-color: var(--primary);
   border-color: var(--primary);
-  /* color: #080808; */
-  color: white;
+  color: hsl(0, 0%, 100%);
 }
 </style>

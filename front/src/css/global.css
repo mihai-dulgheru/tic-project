@@ -1,3 +1,9 @@
 .mr-1 {
-  margin-right: 0.25rem; /* 4px */
+  margin-right: 0.25rem;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
 }

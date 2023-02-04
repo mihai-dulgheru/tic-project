@@ -157,16 +157,17 @@ export default {
 }
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 input[type="checkbox"] + label {
   display: inline;
-  font-weight: normal;
+  font-weight: 400;
   margin: 0 0 0 0.5rem;
 }
 input,
 textarea {
+  border-radius: 0.25rem;
   border: 1px solid var(--light);
   display: block;
   font: inherit;
@@ -191,10 +192,10 @@ h3 {
   margin: 0.5rem 0;
 }
 .invalid label {
-  color: red;
+  color: var(--error);
 }
 .invalid input,
 .invalid textarea {
-  border: 1px solid red;
+  border: 1px solid var(--error);
 }
 </style>

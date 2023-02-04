@@ -15,7 +15,10 @@
           <router-link to="/profile">Profile</router-link>
         </li>
         <li v-else>
-          <router-link to="/auth">Login</router-link>
+          <base-button @click="login">
+            <i class="fa-solid fa-right-to-bracket mr-1"></i>
+            Login
+          </base-button>
         </li>
         <li v-if="isLoggedIn">
           <base-button @click="logout">
@@ -40,6 +43,9 @@ export default {
     },
   },
   methods: {
+    login() {
+      this.$router.replace("/auth");
+    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.replace("/coaches");
@@ -59,7 +65,7 @@ header {
 }
 header a {
   text-decoration: none;
-  color: white;
+  color: hsl(0, 0%, 100%);
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
@@ -73,7 +79,7 @@ h1 {
   margin: 0;
 }
 h1 a {
-  color: white;
+  color: hsl(0, 0%, 100%);
   margin: 0;
 }
 h1 a:hover,

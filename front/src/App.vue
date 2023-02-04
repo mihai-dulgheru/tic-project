@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import "@/css/global.css";
 @import "@/css/variables.css";
 
@@ -48,7 +48,7 @@ body {
 }
 .route-enter-from {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: translateY(-1.875rem);
 }
 .route-enter-active {
   transition: all 0.3s ease-out;
@@ -63,6 +63,6 @@ body {
 }
 .route-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(1.875rem);
 }
 </style>

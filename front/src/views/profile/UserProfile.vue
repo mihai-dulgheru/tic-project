@@ -13,7 +13,7 @@
     <section>
       <base-card>
         <header>
-          <h2>User's profile</h2>
+          <h2>User's Profile</h2>
         </header>
         <div>
           <form @submit.prevent="submitForm">
@@ -36,24 +36,26 @@
     <section>
       <base-card>
         <header>
-          <h2>Change password</h2>
+          <h2>Change Password</h2>
         </header>
         <div>
           <form @submit.prevent="submitPasswordForm">
             <div class="form-control">
               <label for="password">Password</label>
-              <input type="password" id="password" v-model.trim="password" />
+              <password-input
+                id="password"
+                v-model:password="password"
+              ></password-input>
             </div>
             <div class="form-control">
-              <label for="confirmPassword">Confirm password</label>
-              <input
-                type="password"
+              <label for="confirmPassword">Confirm Password</label>
+              <password-input
                 id="confirmPassword"
-                v-model.trim="confirmPassword"
-              />
+                v-model:password="confirmPassword"
+              ></password-input>
             </div>
             <div class="actions">
-              <base-button>Change password</base-button>
+              <base-button>Change Password</base-button>
             </div>
           </form>
         </div>
@@ -64,39 +66,47 @@
       <base-card>
         <div class="subhead subhead--spacious">
           <h2 class="subhead-heading subhead-heading--danger">
-            Delete account
+            Delete Account
           </h2>
         </div>
         <p>
           Once you delete your account, there is no going back. Please be
           certain.
         </p>
-        <button class="button button-danger">Delete your account</button>
+        <button class="button button-danger" @click="deleteAccount">
+          Delete Your Account
+        </button>
+        <confirm-dialog ref="confirmDialog"></confirm-dialog>
       </base-card>
     </section>
   </main>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import ConfirmDialog from "@/components/ui/ConfirmDialog.vue";
+import PasswordInput from "@/components/ui/PasswordInput.vue";
 
 export default {
   name: "UserProfile",
+  components: {
+    ConfirmDialog,
+    PasswordInput,
+  },
   data() {
     return {
+      confirmPassword: null,
+      email: null,
       error: null,
       isLoading: false,
+      name: null,
+      password: null,
       success: null,
     };
   },
-  computed: {
-    ...mapGetters({
-      email: "profile/email",
-      name: "profile/name",
-    }),
-  },
-  created() {
-    this.loadProfile();
+  async created() {
+    await this.loadProfile();
+    this.name = this.$store.getters["profile/name"];
+    this.email = this.$store.getters["profile/email"];
   },
   methods: {
     async loadProfile() {
@@ -110,13 +120,43 @@ export default {
     },
     async submitForm() {
       try {
-        this.$store.dispatch("profile/saveProfile", {
+        await this.$store.dispatch("profile/saveProfile", {
           name: this.name,
           email: this.email,
         });
         this.success = "Profile saved successfully!";
       } catch (error) {
         this.error = error.message || "Something went wrong!";
+      }
+    },
+    async submitPasswordForm() {
+      try {
+        await this.$store.dispatch("profile/changePassword", {
+          password: this.password,
+          confirmPassword: this.confirmPassword,
+        });
+        this.success = "Password changed successfully!";
+        this.password = null;
+        this.confirmPassword = null;
+      } catch (error) {
+        this.error = error.message || "Something went wrong!";
+      }
+    },
+    async deleteAccount() {
+      const result = await this.$refs.confirmDialog.handleShow({
+        closeButton: "Cancel",
+        message:
+          "Do you really want to delete your account? This action cannot be undone.",
+        saveButton: "Delete",
+        title: "Are you sure?",
+      });
+      if (result) {
+        try {
+          await this.$store.dispatch("profile/deleteAccount");
+          this.$router.push("/auth");
+        } catch (error) {
+          this.error = error.message || "Something went wrong!";
+        }
       }
     },
     handleError() {
@@ -140,32 +180,33 @@ h2 {
 form {
   border-radius: 0.75rem;
   border: 1px solid var(--light);
-  margin: 1rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
   row-gap: 0.5rem;
 }
 .form-control {
   margin: 0.5rem 0;
 }
 .form-control div {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-self: flex-start;
 }
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 input,
 textarea {
+  border-radius: 0.25rem;
   border: 1px solid var(--light);
   display: block;
   font: inherit;
-  padding: 0.15rem;
+  padding: 0.5rem;
   width: 100%;
 }
 input:focus,
@@ -175,14 +216,14 @@ textarea:focus {
   outline: none;
 }
 .errors {
-  color: red;
-  font-weight: bold;
+  color: var(--error);
+  font-weight: 700;
 }
 .actions {
   text-align: center;
 }
 .subhead {
-  border-bottom: 1px solid #e1e4e8;
+  border-bottom: 1px solid hsl(214, 13%, 90%);
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
@@ -199,7 +240,7 @@ textarea:focus {
   order: 0;
 }
 .subhead-heading--danger {
-  color: #f85149;
+  color: var(--error);
   font-weight: 600;
 }
 .button {
@@ -217,11 +258,11 @@ textarea:focus {
   white-space: nowrap;
 }
 .button-danger {
-  background-color: #ffffff;
-  color: #f85149;
+  background-color: hsl(0, 0%, 100%);
+  color: var(--error);
 }
 .button-danger:hover {
-  background-color: #f85149;
-  color: #ffffff;
+  background-color: var(--error);
+  color: hsl(0, 0%, 100%);
 }
 </style>

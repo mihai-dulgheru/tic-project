@@ -53,33 +53,33 @@ export default {
 
 <style scoped>
 .backdrop {
+  background-color: hsla(0, 0%, 0%, 0.75);
+  height: 100vh;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
-  height: 100vh;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
   z-index: 10;
 }
 dialog {
-  position: fixed;
-  top: 20vh;
-  left: 10%;
-  width: 80%;
-  z-index: 100;
-  border-radius: 12px;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 0.75rem;
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 0;
+  box-shadow: 0 0.125rem 0.5rem hsla(0, 0%, 0%, 0.25);
+  left: 10%;
   margin: 0;
   overflow: hidden;
-  background-color: white;
+  padding: 0;
+  position: fixed;
+  top: 20vh;
+  width: 80%;
+  z-index: 100;
 }
 header {
   background-color: var(--primary);
-  color: white;
-  width: 100%;
+  color: hsl(0, 0%, 100%);
   padding: 1rem;
+  width: 100%;
 }
 header h2 {
   margin: 0;
@@ -88,10 +88,10 @@ section {
   padding: 1rem;
 }
 menu {
-  padding: 1rem;
   display: flex;
   justify-content: flex-end;
   margin: 0;
+  padding: 1rem;
 }
 @media (min-width: 768px) {
   dialog {

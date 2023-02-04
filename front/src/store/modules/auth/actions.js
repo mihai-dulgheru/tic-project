@@ -4,11 +4,10 @@ let timer;
 
 export default {
   async auth(context, payload) {
-    const { mode } = payload;
-
+    const { email, mode, password } = payload;
     const data = {
-      email: payload.email,
-      password: payload.password,
+      email: email,
+      password: password,
       returnSecureToken: true,
     };
 
@@ -20,8 +19,6 @@ export default {
           break;
         case "signup":
           responseData = await signup(data);
-          break;
-        default:
           break;
       }
     } catch (error) {
@@ -46,12 +43,14 @@ export default {
       userId: responseData.localId,
     });
   },
+
   async login(context, payload) {
     return context.dispatch("auth", {
       ...payload,
       mode: "login",
     });
   },
+
   tryLogin(context) {
     const email = localStorage.getItem("email");
     const token = localStorage.getItem("token");
@@ -75,12 +74,14 @@ export default {
       });
     }
   },
+
   async signup(context, payload) {
     return context.dispatch("auth", {
       ...payload,
       mode: "signup",
     });
   },
+
   logout(context) {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
@@ -95,6 +96,7 @@ export default {
       userId: null,
     });
   },
+
   autoLogout(context) {
     context.dispatch("logout");
     context.commit("setAutoLogout");

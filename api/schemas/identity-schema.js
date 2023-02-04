@@ -1,6 +1,6 @@
 const yup = require('yup');
 
 module.exports = yup.object().shape({
-  changePassword: yup.string().trim().required(),
-  confirmPassword: yup.string().trim().required(),
+  password: yup.string().trim().required().label('Password'),
+  confirmPassword: yup.string().trim().required().label('Confirm Password'),
 });
