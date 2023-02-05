@@ -32,15 +32,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TheHeader",
   computed: {
-    isLoggedIn() {
-      return this.$store.getters["isAuthenticated"];
-    },
-    isCoach() {
-      return this.$store.getters["coaches/isCoach"];
-    },
+    ...mapGetters({
+      isCoach: "coaches/isCoach",
+      isLoggedIn: "isAuthenticated",
+    }),
   },
   methods: {
     login() {

@@ -26,6 +26,7 @@
 
 <script>
 import RequestItem from "@/components/requests/RequestItem.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "RequestsReceived",
@@ -39,12 +40,10 @@ export default {
     };
   },
   computed: {
-    receivedRequests() {
-      return this.$store.getters["requests/requests"];
-    },
-    hasRequests() {
-      return this.$store.getters["requests/hasRequests"];
-    },
+    ...mapGetters({
+      hasRequests: "requests/hasRequests",
+      receivedRequests: "requests/requests",
+    }),
   },
   created() {
     this.loadRequests();

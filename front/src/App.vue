@@ -9,15 +9,14 @@
 
 <script>
 import TheHeader from "@/components/layout/TheHeader.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     TheHeader,
   },
   computed: {
-    didAutoLogout() {
-      return this.$store.getters["didAutoLogout"];
-    },
+    ...mapGetters(["didAutoLogout"]),
   },
   created() {
     this.$store.dispatch("tryLogin");

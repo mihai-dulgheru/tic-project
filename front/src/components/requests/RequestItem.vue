@@ -68,7 +68,7 @@ button {
   justify-content: center;
   position: absolute;
   right: 1rem;
-  top: 1rem;
+  top: 0.875rem;
   width: 1.5rem;
 }
 button:hover {

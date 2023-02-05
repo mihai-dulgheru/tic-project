@@ -42,6 +42,7 @@
 <script>
 import CoachFilter from "@/components/coaches/CoachFilter.vue";
 import CoachItem from "@/components/coaches/CoachItem.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CoachesList",
@@ -62,10 +63,15 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      coaches: "coaches/coaches",
+      hasCoaches: "coaches/hasCoaches",
+      isCoach: "coaches/isCoach",
+      isLoggedIn: "isAuthenticated",
+    }),
     filteredCoaches() {
-      const coaches = this.$store.getters["coaches/coaches"] || [];
       const activeFilters = this.activeFilters || {};
-      return coaches.filter((coach) => {
+      return this.coaches.filter((coach) => {
         const { areas = [], firstName = "", lastName = "" } = coach || {};
         const name = `${firstName} ${lastName}`.toLowerCase();
         const nameReverse = `${lastName} ${firstName}`.toLowerCase();
@@ -81,15 +87,6 @@ export default {
                   .includes(activeFilters.name.toLowerCase()))))
         );
       });
-    },
-    hasCoaches() {
-      return this.$store.getters["coaches/hasCoaches"];
-    },
-    isCoach() {
-      return this.$store.getters["coaches/isCoach"];
-    },
-    isLoggedIn() {
-      return this.$store.getters["isAuthenticated"];
     },
   },
   created() {

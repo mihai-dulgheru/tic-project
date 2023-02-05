@@ -137,8 +137,8 @@ export default {
   },
   async created() {
     await this.loadProfile();
-    this.name.value = this.$store.getters["profile/name"];
     this.email.value = this.$store.getters["profile/email"];
+    this.name.value = this.$store.getters["profile/name"];
   },
   methods: {
     async loadProfile() {

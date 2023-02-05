@@ -16,7 +16,16 @@
 <script>
 export default {
   name: "PasswordInput",
-  props: ["id", "password"],
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
   emits: ["blur", "update:password"],
   data() {
     return {

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { mapGetters } from "vuex";
 
 export default {

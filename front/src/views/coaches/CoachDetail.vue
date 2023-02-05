@@ -6,7 +6,7 @@
         <h3>${{ rate }}/hour</h3>
       </base-card>
     </section>
-    <section>
+    <section v-if="isCoach && userId !== id">
       <base-card>
         <header>
           <h2>Interested? Reach out now!</h2>
@@ -20,8 +20,8 @@
         <base-badge
           v-for="area in areas"
           :key="area"
-          :type="area"
           :title="area"
+          :type="area"
         ></base-badge>
         <p>{{ description }}</p>
       </base-card>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "CoachDetails",
   props: {
@@ -44,6 +46,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      isCoach: "coaches/isCoach",
+      userId: "userId",
+    }),
     fullName() {
       return `${this.selectedCoach?.firstName || ""} ${
         this.selectedCoach?.lastName || ""

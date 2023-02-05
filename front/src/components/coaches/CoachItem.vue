@@ -6,12 +6,16 @@
       <base-badge
         v-for="area in areas"
         :key="area"
-        :type="area"
         :title="area"
+        :type="area"
       ></base-badge>
     </div>
     <div class="actions">
-      <base-button link :to="coachContactLink" mode="outline"
+      <base-button
+        v-if="isCoach && userId !== id"
+        :to="coachContactLink"
+        link
+        mode="outline"
         >Contact</base-button
       >
       <base-button link :to="coachDetailsLink">View Details</base-button>
@@ -20,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "CoachItem",
   props: {
@@ -45,6 +51,10 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      isCoach: "coaches/isCoach",
+      userId: "userId",
+    }),
     fullName() {
       return `${this.firstName} ${this.lastName}`;
     },
