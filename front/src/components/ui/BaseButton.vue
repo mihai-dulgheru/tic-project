@@ -58,7 +58,7 @@ button:active {
 .flat {
   background-color: transparent;
   border: none;
-  color: var(--primary);
+  color: hsl(0, 0%, 44%);
 }
 .outline {
   background-color: transparent;
@@ -66,7 +66,12 @@ button:active {
   color: var(--dark);
 }
 .flat:hover,
-.flat:active,
+.flat:active {
+  background-color: hsl(0, 0%, 44%);
+  border-color: hsl(0, 0%, 44%);
+  /* color: hsl(0, 0%, 31%); */
+  color: hsl(0, 0%, 100%);
+}
 .outline:hover,
 .outline:active {
   background-color: var(--primary);

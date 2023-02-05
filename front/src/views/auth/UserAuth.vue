@@ -3,11 +3,15 @@
     <base-dialog :show="isLoading" fixed title="Authenticating...">
       <base-spinner></base-spinner>
     </base-dialog>
-    <base-dialog :show="!!error" title="An Error Occurred" @close="handleError">
+    <error-dialog
+      :show="!!error"
+      @close="handleError"
+      title="An Error Occurred"
+    >
       <p>
         {{ error }}
       </p>
-    </base-dialog>
+    </error-dialog>
     <base-card>
       <form @submit.prevent="submitForm">
         <div class="form-control">

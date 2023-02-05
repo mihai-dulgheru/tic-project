@@ -1,12 +1,8 @@
 <template>
   <main>
-    <base-dialog
-      :show="!!error"
-      title="An Error Occurred!"
-      @close="handleError"
-    >
+    <error-dialog :show="!!error" @close="handleError" title="Error!">
       <p>{{ error }}</p>
-    </base-dialog>
+    </error-dialog>
     <section>
       <coach-filter @change-filter="setFilter"></coach-filter>
     </section>

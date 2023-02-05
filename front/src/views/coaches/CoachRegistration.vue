@@ -1,12 +1,8 @@
 <template>
   <section>
-    <base-dialog
-      :show="!!error"
-      title="An Error Occurred!"
-      @close="handleError"
-    >
+    <error-dialog :show="!!error" @close="handleError" title="Error!">
       <p>{{ error }}</p>
-    </base-dialog>
+    </error-dialog>
     <div v-if="isLoading">
       <base-spinner></base-spinner>
     </div>

@@ -65,20 +65,19 @@ export default {
 
 <style scoped>
 header {
-  display: flex;
   align-items: center;
+  display: flex;
   flex-flow: column nowrap;
-  padding: 1rem;
   position: relative;
-  row-gap: 1rem;
+  row-gap: 0.5rem;
 }
 .icon-box {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 5rem;
-  width: 5rem;
   color: var(--error);
+  display: flex;
+  height: 5rem;
+  justify-content: center;
+  width: 5rem;
 }
 .modal-title {
   font-size: 1.5rem;
@@ -92,45 +91,45 @@ header {
   border: none;
   color: hsl(0, 0%, 18%);
   cursor: pointer;
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: 1.75rem;
+  padding: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: -0.5rem;
+  top: -0.5rem;
+  width: 2rem;
 }
 .modal-body {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 .modal-body p {
   color: hsl(0, 0%, 18%);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 400;
   margin: 0;
   text-align: justify;
 }
 .modal-footer {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: flex-end;
-  padding: 1rem;
 }
 .buttons {
-  display: flex;
   column-gap: 1rem;
+  display: flex;
 }
 .buttons button {
-  border: none;
   border-radius: 0.375rem;
+  border: none;
   color: hsl(0, 0%, 100%);
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 2.5rem;
   opacity: 0.8;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   text-transform: capitalize;
 }
 .buttons button:hover {

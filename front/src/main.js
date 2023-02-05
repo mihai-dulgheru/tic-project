@@ -11,6 +11,9 @@ import BaseSpinner from "@/components/ui/BaseSpinner.vue";
 const BaseDialog = defineAsyncComponent(() =>
   import("@/components/ui/BaseDialog.vue")
 );
+const ErrorDialog = defineAsyncComponent(() =>
+  import("@/components/ui/ErrorDialog.vue")
+);
 
 const app = createApp(App);
 
@@ -20,7 +23,8 @@ app.use(router);
 app.component("base-badge", BaseBadge);
 app.component("base-button", BaseButton);
 app.component("base-card", BaseCard);
-app.component("base-spinner", BaseSpinner);
 app.component("base-dialog", BaseDialog);
+app.component("base-spinner", BaseSpinner);
+app.component("error-dialog", ErrorDialog);
 
 app.mount("#app");

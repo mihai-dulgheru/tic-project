@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div v-if="show" @click="tryClose" class="backdrop"></div>
+    <div v-if="show" @click="close" class="backdrop"></div>
     <transition name="dialog">
       <dialog open v-if="show">
         <header>
@@ -13,7 +13,7 @@
         </section>
         <menu v-if="!fixed">
           <slot name="actions">
-            <base-button @click="tryClose">Close</base-button>
+            <base-button mode="flat" @click="close">Close</base-button>
           </slot>
         </menu>
       </dialog>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "BaseDialog",
+  name: "ErrorDialog",
   props: {
     show: {
       type: Boolean,
@@ -41,7 +41,7 @@ export default {
   },
   emits: ["close"],
   methods: {
-    tryClose() {
+    close() {
       if (this.fixed) {
         return;
       }
@@ -76,7 +76,7 @@ dialog {
   z-index: 100;
 }
 header {
-  background-color: var(--primary);
+  background-color: var(--error);
   color: hsl(0, 0%, 100%);
   padding: 1rem;
   width: 100%;

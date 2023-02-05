@@ -54,13 +54,16 @@ export default {
   border-radius: 0.75rem;
   border: none;
   box-shadow: 0 0.125rem 0.5rem hsla(0, 0%, 0%, 0.25);
+  display: flex;
+  flex-flow: column nowrap;
   margin: 0;
   max-width: 40rem;
   overflow: hidden;
   padding: 1rem;
   position: fixed;
+  row-gap: 1rem;
   top: 20vh;
-  width: 80%;
+  width: 100%;
   z-index: 100;
 }
 </style>

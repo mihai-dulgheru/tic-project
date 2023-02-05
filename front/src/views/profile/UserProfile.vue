@@ -3,13 +3,9 @@
     <base-dialog :show="!!success" @close="handleSuccess" title="Success!">
       <p>{{ success }}</p>
     </base-dialog>
-    <base-dialog
-      :show="!!error"
-      @close="handleError"
-      title="An Error Occurred!"
-    >
+    <error-dialog :show="!!error" @close="handleError" title="Error!">
       <p>{{ error }}</p>
-    </base-dialog>
+    </error-dialog>
     <section>
       <base-card>
         <header>
