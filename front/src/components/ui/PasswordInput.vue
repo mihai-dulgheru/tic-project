@@ -23,7 +23,6 @@ export default {
     },
     password: {
       type: String,
-      required: true,
     },
   },
   emits: ["blur", "update:password"],
