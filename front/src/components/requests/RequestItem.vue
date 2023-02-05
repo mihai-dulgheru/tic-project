@@ -4,7 +4,7 @@
       <a :href="emailLink">{{ email }}</a>
     </div>
     <p>{{ message }}</p>
-    <button @click="handleDelete">&times;</button>
+    <button @click="handleDelete"><i class="fa-solid fa-trash"></i></button>
   </li>
 </template>
 
@@ -56,14 +56,22 @@ p {
   margin: 0.5rem 0 0 0;
 }
 button {
+  align-items: center;
   background: transparent;
+  border-radius: 50%;
   border: none;
   color: var(--error);
   cursor: pointer;
-  font-size: 1.5rem;
-  font-weight: 700;
+  display: flex;
+  font-size: medium;
+  height: 1.5rem;
+  justify-content: center;
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  right: 1rem;
+  top: 1rem;
+  width: 1.5rem;
+}
+button:hover {
+  background: hsla(0, 53%, 51%, 0.25);
 }
 </style>
