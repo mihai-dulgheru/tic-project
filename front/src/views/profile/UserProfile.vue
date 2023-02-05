@@ -15,11 +15,27 @@
           <form @submit.prevent="submitForm">
             <div class="form-control">
               <label for="name">Name</label>
-              <input type="text" id="name" v-model.trim="name" />
+              <input
+                @blur="clearValidity('name')"
+                id="name"
+                type="text"
+                v-model.trim="name.value"
+              />
+              <p v-if="!this.name.isValid" class="error">
+                Name must not be empty.
+              </p>
             </div>
             <div class="form-control">
               <label for="email">Email</label>
-              <input type="email" id="email" v-model.trim="email" />
+              <input
+                @blur="clearValidity('email')"
+                id="email"
+                type="email"
+                v-model.trim="email.value"
+              />
+              <p v-if="!this.email.isValid" class="error">
+                Email must not be empty.
+              </p>
             </div>
             <div class="actions">
               <base-button>Save</base-button>
@@ -39,16 +55,24 @@
             <div class="form-control">
               <label for="password">Password</label>
               <password-input
+                @blur="clearValidity('password')"
                 id="password"
-                v-model:password="password"
+                v-model:password="password.value"
               ></password-input>
+              <p v-if="!this.password.isValid" class="error">
+                Password must not be empty.
+              </p>
             </div>
             <div class="form-control">
               <label for="confirmPassword">Confirm Password</label>
               <password-input
+                @blur="clearValidity('confirmPassword')"
                 id="confirmPassword"
-                v-model:password="confirmPassword"
+                v-model:password="confirmPassword.value"
               ></password-input>
+              <p v-if="!this.confirmPassword.isValid" class="error">
+                Passwords must match.
+              </p>
             </div>
             <div class="actions">
               <base-button>Change Password</base-button>
@@ -90,19 +114,31 @@ export default {
   },
   data() {
     return {
-      confirmPassword: null,
-      email: null,
+      confirmPassword: {
+        value: null,
+        isValid: true,
+      },
+      email: {
+        value: null,
+        isValid: true,
+      },
+      name: {
+        value: null,
+        isValid: true,
+      },
+      password: {
+        value: null,
+        isValid: true,
+      },
       error: null,
       isLoading: false,
-      name: null,
-      password: null,
       success: null,
     };
   },
   async created() {
     await this.loadProfile();
-    this.name = this.$store.getters["profile/name"];
-    this.email = this.$store.getters["profile/email"];
+    this.name.value = this.$store.getters["profile/name"];
+    this.email.value = this.$store.getters["profile/email"];
   },
   methods: {
     async loadProfile() {
@@ -114,11 +150,26 @@ export default {
       }
       this.isLoading = false;
     },
+    validateUsersProfileForm() {
+      this.name.isValid = !!this.name.value;
+      this.email.isValid = !!this.email.value;
+      return this.name.isValid && this.email.isValid;
+    },
+    validateChangePasswordForm() {
+      this.password.isValid = !!this.password.value;
+      this.confirmPassword.isValid =
+        !!this.confirmPassword.value &&
+        this.password.value === this.confirmPassword.value;
+      return this.password.isValid && this.confirmPassword.isValid;
+    },
     async submitForm() {
+      if (!this.validateUsersProfileForm()) {
+        return;
+      }
       try {
         await this.$store.dispatch("profile/saveProfile", {
-          name: this.name,
-          email: this.email,
+          name: this.name.value,
+          email: this.email.value,
         });
         this.success = "Profile saved successfully!";
       } catch (error) {
@@ -126,14 +177,17 @@ export default {
       }
     },
     async submitPasswordForm() {
+      if (!this.validateChangePasswordForm()) {
+        return;
+      }
       try {
         await this.$store.dispatch("profile/changePassword", {
-          password: this.password,
-          confirmPassword: this.confirmPassword,
+          password: this.password.value,
+          confirmPassword: this.confirmPassword.value,
         });
         this.success = "Password changed successfully!";
-        this.password = null;
-        this.confirmPassword = null;
+        this.password.value = null;
+        this.confirmPassword.value = null;
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
@@ -161,11 +215,18 @@ export default {
     handleSuccess() {
       this.success = null;
     },
+    clearValidity(input) {
+      this[input].isValid = true;
+    },
   },
 };
 </script>
 
 <style scoped>
+main {
+  display: flex;
+  flex-direction: column;
+}
 header {
   text-align: center;
 }
@@ -260,5 +321,10 @@ textarea:focus {
 .button-danger:hover {
   background-color: var(--error);
   color: hsl(0, 0%, 100%);
+}
+.error {
+  color: var(--error);
+  font-size: medium;
+  font-weight: 400;
 }
 </style>

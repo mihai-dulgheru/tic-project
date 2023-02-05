@@ -4,7 +4,8 @@
       :id="id"
       :type="passwordFieldType"
       :value="password"
-      @input="$emit('update:password', $event.target.value)"
+      @blur="this.$emit('blur')"
+      @input="this.$emit('update:password', $event.target.value)"
     />
     <button @click="switchVisibility" type="button">
       <img :src="src" />
@@ -16,7 +17,7 @@
 export default {
   name: "PasswordInput",
   props: ["id", "password"],
-  emits: ["update:password"],
+  emits: ["blur", "update:password"],
   data() {
     return {
       passwordFieldType: "password",
