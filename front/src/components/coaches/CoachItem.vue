@@ -12,7 +12,7 @@
     </div>
     <div class="actions">
       <base-button
-        v-if="isCoach && userId !== id"
+        v-if="userId !== id"
         :to="coachContactLink"
         link
         mode="outline"
@@ -51,10 +51,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      isCoach: "coaches/isCoach",
-      userId: "userId",
-    }),
+    ...mapGetters(["userId"]),
     fullName() {
       return `${this.firstName} ${this.lastName}`;
     },

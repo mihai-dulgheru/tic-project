@@ -1,6 +1,8 @@
 export default {
   didAutoLogout(state) {
-    return state.didAutoLogout || localStorage.getItem("didAutoLogout");
+    return (
+      state.didAutoLogout || localStorage.getItem("didAutoLogout") === "true"
+    );
   },
   email(state) {
     return state.email || localStorage.getItem("email");

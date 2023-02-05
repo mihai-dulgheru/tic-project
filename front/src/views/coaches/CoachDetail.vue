@@ -6,7 +6,7 @@
         <h3>${{ rate }}/hour</h3>
       </base-card>
     </section>
-    <section v-if="isCoach && userId !== id">
+    <section v-if="userId !== id">
       <base-card>
         <header>
           <h2>Interested? Reach out now!</h2>
@@ -46,10 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      isCoach: "coaches/isCoach",
-      userId: "userId",
-    }),
+    ...mapGetters(["userId"]),
     fullName() {
       return `${this.selectedCoach?.firstName || ""} ${
         this.selectedCoach?.lastName || ""

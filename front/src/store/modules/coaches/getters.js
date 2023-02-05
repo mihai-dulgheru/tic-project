@@ -15,7 +15,7 @@ export default {
     const userId = rootGetters.userId;
     return (
       coaches.some((coach) => coach.id === userId) ||
-      localStorage.getItem("isCoach")
+      localStorage.getItem("isCoach") === "true"
     );
   },
   shouldUpdate(state) {

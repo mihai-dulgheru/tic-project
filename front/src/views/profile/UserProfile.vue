@@ -326,8 +326,7 @@ textarea:focus {
 }
 .error {
   color: var(--error);
-  font-size: medium;
-  font-weight: 400;
+  font-weight: 700;
 }
 .card {
   margin: 0 auto;
