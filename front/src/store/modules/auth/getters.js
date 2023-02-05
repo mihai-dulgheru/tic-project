@@ -1,17 +1,17 @@
 export default {
   didAutoLogout(state) {
-    return state.didAutoLogout;
+    return state.didAutoLogout || localStorage.getItem("didAutoLogout");
   },
   email(state) {
-    return state.email;
+    return state.email || localStorage.getItem("email");
   },
   isAuthenticated(state) {
-    return !!state.token;
+    return !!state.token || !!localStorage.getItem("token");
   },
   token(state) {
-    return state.token;
+    return state.token || localStorage.getItem("token");
   },
   userId(state) {
-    return state.userId;
+    return state.userId || localStorage.getItem("userId");
   },
 };

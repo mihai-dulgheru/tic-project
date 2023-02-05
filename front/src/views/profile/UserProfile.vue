@@ -1,12 +1,12 @@
 <template>
-  <main>
+  <main class="main">
     <base-dialog :show="!!success" @close="handleSuccess" title="Success!">
       <p>{{ success }}</p>
     </base-dialog>
     <error-dialog :show="!!error" @close="handleError" title="Error!">
       <p>{{ error }}</p>
     </error-dialog>
-    <section>
+    <section class="w-full">
       <base-card>
         <header>
           <h2>User's Profile</h2>
@@ -45,7 +45,7 @@
       </base-card>
     </section>
 
-    <section>
+    <section class="w-full">
       <base-card>
         <header>
           <h2>Change Password</h2>
@@ -82,7 +82,7 @@
       </base-card>
     </section>
 
-    <section>
+    <section class="w-full">
       <base-card>
         <div class="subhead subhead--spacious">
           <h2 class="subhead-heading subhead-heading--danger">
@@ -223,9 +223,11 @@ export default {
 </script>
 
 <style scoped>
-main {
+.main {
   display: flex;
   flex-direction: column;
+  padding: 2rem 0;
+  row-gap: 2rem;
 }
 header {
   text-align: center;
@@ -326,5 +328,8 @@ textarea:focus {
   color: var(--error);
   font-size: medium;
   font-weight: 400;
+}
+.card {
+  margin: 0 auto;
 }
 </style>

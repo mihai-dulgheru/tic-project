@@ -28,7 +28,9 @@ export default {
     const expiresIn = +responseData.expiresIn * 1000;
     const expirationDate = new Date().getTime() + expiresIn;
 
+    localStorage.setItem("didAutoLogout", false);
     localStorage.setItem("email", responseData.email);
+    localStorage.setItem("isCoach", responseData.isCoach);
     localStorage.setItem("token", responseData.idToken);
     localStorage.setItem("tokenExpiration", expirationDate);
     localStorage.setItem("userId", responseData.localId);
@@ -83,7 +85,9 @@ export default {
   },
 
   logout(context) {
+    localStorage.removeItem("didAutoLogout");
     localStorage.removeItem("email");
+    localStorage.removeItem("isCoach");
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
     localStorage.removeItem("userId");
@@ -98,7 +102,8 @@ export default {
   },
 
   autoLogout(context) {
-    context.dispatch("logout");
     context.commit("setAutoLogout");
+    context.dispatch("logout");
+    localStorage.setItem("didAutoLogout", true);
   },
 };

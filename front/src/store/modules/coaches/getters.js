@@ -13,7 +13,10 @@ export default {
   isCoach(_state, getters, _rootState, rootGetters) {
     const coaches = getters.coaches;
     const userId = rootGetters.userId;
-    return coaches.some((coach) => coach.id === userId);
+    return (
+      coaches.some((coach) => coach.id === userId) ||
+      localStorage.getItem("isCoach")
+    );
   },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;

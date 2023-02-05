@@ -59,6 +59,7 @@ module.exports = async (req, res) => {
     email,
     expiresIn: 15 * 60 * 1000,
     idToken: token,
+    isCoach: role === 'admin',
     kind: 'identitytoolkit#VerifyPasswordResponse',
     localId: id,
     refreshToken,

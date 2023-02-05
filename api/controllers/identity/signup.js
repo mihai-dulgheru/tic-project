@@ -56,6 +56,7 @@ module.exports = async (req, res) => {
     email,
     expiresIn: 15 * 60 * 1000,
     idToken: token,
+    isCoach: false,
     localId: id,
     refreshToken,
   });

@@ -17,6 +17,7 @@ export default {
           ...coachData,
           id: context.rootGetters.userId,
         });
+        localStorage.setItem("isCoach", true);
       }
     } catch (error) {
       throw new Error(error?.message || "Failed to register as a coach.");
