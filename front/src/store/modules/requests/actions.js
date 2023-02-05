@@ -1,4 +1,4 @@
-import { createRequest, readRequests } from "@/api/visitors";
+import { createRequest, deleteRequest, readRequests } from "@/api/visitors";
 
 export default {
   async contactCoach(context, payload) {
@@ -17,5 +17,19 @@ export default {
     const coachId = context.rootGetters.userId;
     const requests = await readRequests(coachId);
     context.commit("setRequests", requests);
+  },
+
+  async deleteRequest(context, payload) {
+    const { id: requestId } = payload;
+    const requests = context.getters.requests;
+    if (requests.find((r) => r.id === requestId)) {
+      try {
+        const coachId = context.rootGetters.userId;
+        const request = await deleteRequest({ coachId, requestId });
+        context.commit("deleteRequest", request);
+      } catch (error) {
+        throw new Error(error?.message || "Failed to delete the request.");
+      }
+    }
   },
 };

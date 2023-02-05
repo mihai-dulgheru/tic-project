@@ -4,6 +4,7 @@
       <a :href="emailLink">{{ email }}</a>
     </div>
     <p>{{ message }}</p>
+    <button @click="handleDelete">&times;</button>
   </li>
 </template>
 
@@ -20,9 +21,15 @@ export default {
       required: true,
     },
   },
+  emits: ["delete"],
   computed: {
     emailLink() {
       return `mailto:${this.email}`;
+    },
+  },
+  methods: {
+    handleDelete() {
+      this.$emit("delete");
     },
   },
 };
@@ -34,6 +41,7 @@ li {
   border: 1px solid var(--light);
   margin: 1rem 0;
   padding: 1rem;
+  position: relative;
 }
 a {
   color: var(--primary);
@@ -46,5 +54,16 @@ a:active {
 }
 p {
   margin: 0.5rem 0 0 0;
+}
+button {
+  background: transparent;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 700;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
 }
 </style>

@@ -15,6 +15,7 @@
             :key="request.id"
             :email="request.email"
             :message="request.message"
+            @delete="deleteRequest(request.id)"
           ></request-item>
         </ul>
         <h3 v-else>You haven't received any requests yet!</h3>
@@ -60,6 +61,13 @@ export default {
     },
     handleError() {
       this.error = null;
+    },
+    async deleteRequest(id) {
+      try {
+        await this.$store.dispatch("requests/deleteRequest", { id });
+      } catch (error) {
+        this.error = error.message || "Something went wrong!";
+      }
     },
   },
 };
