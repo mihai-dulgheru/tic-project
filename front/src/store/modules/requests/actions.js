@@ -1,8 +1,19 @@
-import { createRequest, deleteRequest, readRequests } from "@/api/visitors";
+import {
+  createRequest as createRequestAdmin,
+  deleteRequest,
+  readRequests,
+} from "@/api/requests";
+import { createRequest as createRequestVisitor } from "@/api/visitors";
 
 export default {
   async contactCoach(context, payload) {
     try {
+      let createRequest;
+      if (context.rootGetters.isAuthenticated) {
+        createRequest = createRequestAdmin;
+      } else {
+        createRequest = createRequestVisitor;
+      }
       const request = await createRequest(payload);
       if (request) {
         request.coachId = payload.coachId;

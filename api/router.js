@@ -6,7 +6,7 @@ const {
   loading,
   notFound,
 } = require('./middleware');
-const { coach, identity, request, visitor } = require('./routes');
+const { coach, identity, message, request, visitor } = require('./routes');
 
 const router = Router();
 
@@ -21,6 +21,7 @@ router.use(error);
 // use the router instances defined
 router.use(coach);
 router.use(identity);
+router.use(message);
 router.use(request);
 router.use(visitor);
 

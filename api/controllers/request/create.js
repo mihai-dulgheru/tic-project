@@ -23,15 +23,37 @@ module.exports = async (req, res) => {
     createdAt: new Date(),
   };
 
-  const response = await requestsRef
-    .doc(coachId)
-    .collection('messages')
-    .add(payload);
+  const requestRef = requestsRef.doc(coachId);
+  try {
+    await requestRef.set({
+      createdAt: payload.createdAt,
+    });
+  } catch (error) {
+    throw error(500, 'Error creating request');
+  }
+  const response = await requestRef.collection('messages').add(payload);
   if (!response.id) {
     throw error(500, 'Failed to create request');
   }
   const data = (await response.get()).data();
   data.id = response.id;
+
+  try {
+    const messagesRef = db.collection('messages');
+    await messagesRef.doc(me).set({
+      coach: {
+        id: coachId,
+      },
+      createdAt: payload.createdAt,
+    });
+    await messagesRef
+      .doc(me)
+      .collection('messages')
+      .doc(response.id)
+      .set(payload);
+  } catch (error) {
+    throw error(500, 'Error creating message');
+  }
 
   return res
     .status(200)

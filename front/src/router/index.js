@@ -5,6 +5,7 @@ const CoachDetail = () => import("@/views/coaches/CoachDetail.vue");
 const CoachRegistration = () => import("@/views/coaches/CoachRegistration.vue");
 const CoachesList = () => import("@/views/coaches/CoachesList.vue");
 const ContactCoach = () => import("@/views/requests/ContactCoach.vue");
+const MessagesSent = () => import("@/views/messages/MessagesSent.vue");
 const NotFound = () => import("@/views/NotFound.vue");
 const RequestsReceived = () => import("@/views/requests/RequestsReceived.vue");
 const UserAuth = () => import("@/views/auth/UserAuth.vue");
@@ -27,6 +28,11 @@ const routes = [
   {
     path: "/requests",
     component: RequestsReceived,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/messages",
+    component: MessagesSent,
     meta: { requiresAuth: true },
   },
   {

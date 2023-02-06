@@ -3,6 +3,7 @@
     <div class="form-control">
       <label for="email">Your E-Mail</label>
       <input
+        :class="{ disabled }"
         :disabled="disabled"
         id="email"
         type="email"

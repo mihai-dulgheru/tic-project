@@ -7,3 +7,11 @@
 .h-full {
   height: 100%;
 }
+.center {
+  display: grid;
+  place-items: center;
+}
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -12,9 +12,12 @@
           <router-link to="/requests">Requests</router-link>
         </li>
         <li v-if="isLoggedIn">
+          <router-link to="/messages">Messages</router-link>
+        </li>
+        <li v-if="isLoggedIn">
           <router-link to="/profile">Profile</router-link>
         </li>
-        <li v-else>
+        <li v-if="!isLoggedIn">
           <base-button @click="login">
             <i class="fa-solid fa-right-to-bracket mr-1"></i>
             Login

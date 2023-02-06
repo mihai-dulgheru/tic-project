@@ -28,14 +28,12 @@
             <div class="form-control">
               <label for="email">Email</label>
               <input
-                @blur="clearValidity('email')"
+                :value="email"
+                class="disabled"
+                disabled
                 id="email"
                 type="email"
-                v-model.trim="email.value"
               />
-              <p v-if="!this.email.isValid" class="error">
-                Email must not be empty.
-              </p>
             </div>
             <div class="actions">
               <base-button>Save</base-button>
@@ -105,6 +103,7 @@
 <script>
 import ConfirmDialog from "@/components/ui/ConfirmDialog.vue";
 import PasswordInput from "@/components/ui/PasswordInput.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "UserProfile",
@@ -115,10 +114,6 @@ export default {
   data() {
     return {
       confirmPassword: {
-        value: null,
-        isValid: true,
-      },
-      email: {
         value: null,
         isValid: true,
       },
@@ -137,8 +132,12 @@ export default {
   },
   async created() {
     await this.loadProfile();
-    this.email.value = this.$store.getters["profile/email"];
     this.name.value = this.$store.getters["profile/name"];
+  },
+  computed: {
+    ...mapGetters({
+      email: "profile/email",
+    }),
   },
   methods: {
     async loadProfile() {
@@ -152,8 +151,7 @@ export default {
     },
     validateUsersProfileForm() {
       this.name.isValid = !!this.name.value;
-      this.email.isValid = !!this.email.value;
-      return this.name.isValid && this.email.isValid;
+      return this.name.isValid;
     },
     validateChangePasswordForm() {
       this.password.isValid = !!this.password.value;
@@ -168,8 +166,8 @@ export default {
       }
       try {
         await this.$store.dispatch("profile/saveProfile", {
+          email: this.email,
           name: this.name.value,
-          email: this.email.value,
         });
         this.success = "Profile saved successfully!";
       } catch (error) {
