@@ -24,24 +24,15 @@ module.exports = async (req, res) => {
     throw error(404, 'Message not found');
   }
 
+  const data = messageDoc.data();
   const {
     coach: { id: coachId },
-  } = (await db.collection('messages').doc(userId).get()).data();
-  if (!coachId) {
-    throw error(404, 'Coach not found');
-  }
-  const coachRef = db.collection('coaches').doc(coachId);
-  const coachDoc = await coachRef.get();
-  if (!coachDoc.exists) {
-    throw error(404, 'Coach not found');
-  }
-
-  const { email, firstName, lastName } = coachDoc.data();
-  const data = {
-    ...messageDoc.data(),
-    id: messageDoc.id,
-    coach: { id: coachId, email, firstName, lastName },
-  };
+  } = data;
+  const { email, firstName, lastName } = (
+    await db.collection('coaches').doc(coachId).get()
+  ).data();
+  data.id = messageDoc.id;
+  data.coach = { id: coachId, email, firstName, lastName };
 
   await messageRef.delete();
 

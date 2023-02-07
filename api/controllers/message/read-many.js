@@ -23,22 +23,19 @@ module.exports = async (req, res) => {
     return res.status(200).json([]);
   }
 
-  const {
-    coach: { id: coachId },
-  } = messageDoc.data();
-  const coachRef = db.collection('coaches').doc(coachId);
-  const coachDoc = await coachRef.get();
-  if (!coachDoc.exists) {
-    throw error(404, 'Coach not found');
-  }
-  const { email, firstName, lastName } = coachDoc.data();
-
-  const data = snapshot.docs.map((doc) => {
+  const data = [];
+  for (const doc of snapshot.docs) {
     const message = doc.data();
+    const {
+      coach: { id: coachId },
+    } = message;
+    const { email, firstName, lastName } = (
+      await db.collection('coaches').doc(coachId).get()
+    ).data();
     message.id = doc.id;
     message.coach = { id: coachId, email, firstName, lastName };
-    return message;
-  });
+    data.push(message);
+  }
 
   return res.status(200).json(data);
 };

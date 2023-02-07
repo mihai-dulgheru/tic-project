@@ -22,21 +22,15 @@ module.exports = async (req, res) => {
   if (!messageDoc.exists) {
     throw error(404, 'Message not found');
   }
-  const data = messageDoc.data();
-  data.id = messageDoc.id;
 
+  const data = messageDoc.data();
   const {
     coach: { id: coachId },
-  } = (await db.collection('messages').doc(userId).get()).data();
-  if (!coachId) {
-    throw error(404, 'Coach not found');
-  }
-  const coachRef = db.collection('coaches').doc(coachId);
-  const coachDoc = await coachRef.get();
-  if (!coachDoc.exists) {
-    throw error(404, 'Coach not found');
-  }
-  const { email, firstName, lastName } = coachDoc.data();
+  } = data;
+  const { email, firstName, lastName } = (
+    await db.collection('coaches').doc(coachId).get()
+  ).data();
+  data.id = messageDoc.id;
   data.coach = { id: coachId, email, firstName, lastName };
 
   return res.status(200).json(data);

@@ -6,16 +6,17 @@
     <section>
       <base-card>
         <header>
-          <h2>Messages</h2>
+          <h2>Sent Messages</h2>
         </header>
         <base-spinner v-if="isLoading"></base-spinner>
         <ul v-else-if="hasMessages">
           <message-item
             v-for="message in sentMessages"
             :key="message.id"
-            :email="message.email"
+            :coach="message.coach"
             :message="message.message"
             @delete="deleteMessage(message.id)"
+            @edit="editMessage(message.id)"
           ></message-item>
         </ul>
         <h3 v-else>You haven't sent any messages yet!</h3>
@@ -67,6 +68,9 @@ export default {
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
+    },
+    editMessage(id) {
+      this.$router.push(`/messages/${id}`);
     },
   },
 };

@@ -8,13 +8,6 @@ module.exports = async (req, res) => {
     throw error(404, 'Missing required params');
   }
 
-  const db = initializeFirestore();
-  const identityRef = db.collection('identities').doc(userId);
-  const identityDoc = await identityRef.get();
-  if (!identityDoc.exists) {
-    throw error(404, 'Identity not found');
-  }
-
   const updates = req.body;
   const allowedUpdates = ['email', 'message'];
   const isValidUpdate = Object.keys(updates).every((update) =>
@@ -22,16 +15,6 @@ module.exports = async (req, res) => {
   );
   if (!isValidUpdate) {
     throw error(400, 'Invalid updates');
-  }
-
-  const messageRef = db
-    .collection('messages')
-    .doc(userId)
-    .collection('messages')
-    .doc(messageId);
-  const messageDoc = await messageRef.get();
-  if (!messageDoc.exists) {
-    throw error(404, 'Message not found');
   }
 
   for (const [key, value] of Object.entries(updates)) {
@@ -46,28 +29,35 @@ module.exports = async (req, res) => {
     }
   }
 
+  const db = initializeFirestore();
+  const identityRef = db.collection('identities').doc(userId);
+  const identityDoc = await identityRef.get();
+  if (!identityDoc.exists) {
+    throw error(404, 'Identity not found');
+  }
+
+  const messageRef = db
+    .collection('messages')
+    .doc(userId)
+    .collection('messages')
+    .doc(messageId);
+  const messageDoc = await messageRef.get();
+  if (!messageDoc.exists) {
+    throw error(404, 'Message not found');
+  }
+
   const updatedAt = new Date();
   await messageRef.update({ ...updates, updatedAt });
-  const doc = await messageRef.get();
 
+  const data = messageDoc.data();
   const {
     coach: { id: coachId },
-  } = (await db.collection('messages').doc(userId).get()).data();
-  if (!coachId) {
-    throw error(404, 'Coach not found');
-  }
-  const coachRef = db.collection('coaches').doc(coachId);
-  const coachDoc = await coachRef.get();
-  if (!coachDoc.exists) {
-    throw error(404, 'Coach not found');
-  }
-
-  const { email, firstName, lastName } = coachDoc.data();
-  const data = {
-    ...doc.data(),
-    id: doc.id,
-    coach: { id: coachId, email, firstName, lastName },
-  };
+  } = data;
+  const { email, firstName, lastName } = (
+    await db.collection('coaches').doc(coachId).get()
+  ).data();
+  data.id = messageDoc.id;
+  data.coach = { id: coachId, email, firstName, lastName };
 
   const requestRef = db
     .collection('requests')
@@ -78,6 +68,7 @@ module.exports = async (req, res) => {
   if (!requestDoc.exists) {
     throw error(404, 'Request not found');
   }
+
   await requestRef.update({ ...updates, updatedAt });
 
   return res

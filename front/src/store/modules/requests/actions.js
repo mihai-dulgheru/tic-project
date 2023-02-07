@@ -25,7 +25,7 @@ export default {
   },
 
   async fetchRequests(context) {
-    const coachId = context.rootGetters.userId;
+    const { userId: coachId } = context.rootGetters;
     const requests = await readRequests(coachId);
     context.commit("setRequests", requests);
   },
@@ -35,7 +35,7 @@ export default {
     const requests = context.getters.requests;
     if (requests.find((r) => r.id === requestId)) {
       try {
-        const coachId = context.rootGetters.userId;
+        const { userId: coachId } = context.rootGetters;
         const request = await deleteRequest({ coachId, requestId });
         context.commit("deleteRequest", request);
       } catch (error) {

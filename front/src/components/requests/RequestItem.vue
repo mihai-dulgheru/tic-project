@@ -72,6 +72,6 @@ button {
   width: 1.5rem;
 }
 button:hover {
-  background: hsla(0, 53%, 51%, 0.25);
+  background: hsla(0, 53%, 51%, 0.1);
 }
 </style>

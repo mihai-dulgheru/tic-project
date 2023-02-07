@@ -23,9 +23,27 @@ module.exports = async (req, res) => {
   if (!doc.exists) {
     throw error(404, 'Request not found');
   }
+
   const data = doc.data();
   data.id = doc.id;
   await requestRef.delete();
+
+  // TODO: Delete all messages associated with this request
+  // const messagesRef = db.collection('messages');
+  // const messagesQuery = messagesRef.where(`messages`, 'array-contains', {
+  //   coach: { id: coachId },
+  // });
+  // console.log('messagesQuery', messagesQuery);
+  // const messagesSnapshot = await messagesQuery.get();
+  // if (messagesSnapshot.empty) {
+  //   throw error(404, 'Messages not found');
+  // }
+  // const batch = db.batch();
+  // messagesSnapshot.forEach((doc) => {
+  //   const messageRef = messagesRef.doc(doc.id);
+  //   batch.delete(messageRef);
+  // });
+  // await batch.commit();
 
   return res
     .status(200)

@@ -41,16 +41,18 @@ module.exports = async (req, res) => {
   try {
     const messagesRef = db.collection('messages');
     await messagesRef.doc(me).set({
-      coach: {
-        id: coachId,
-      },
       createdAt: payload.createdAt,
     });
     await messagesRef
       .doc(me)
       .collection('messages')
       .doc(response.id)
-      .set(payload);
+      .set({
+        ...payload,
+        coach: {
+          id: coachId,
+        },
+      });
   } catch (error) {
     throw error(500, 'Error creating message');
   }
