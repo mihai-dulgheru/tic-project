@@ -9,15 +9,38 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline" @click="loadCoaches(true)">
-            <i class="fa-solid fa-arrows-rotate"></i>
-          </base-button>
-          <base-button
-            v-if="isLoggedIn && !isCoach && !isLoading"
-            link
-            to="/register"
-            >Register as Coach</base-button
-          >
+          <div class="controls__left">
+            <div class="sort">
+              <div class="sort__item" @click="handleClickName">
+                <span class="labels">Name</span>
+                <button class="sort__button">
+                  <i class="fa-solid fa-sort sort__icon"></i>
+                </button>
+              </div>
+              <div class="sort__item" @click="handleClickHourlyRate">
+                <span class="labels">Hourly Rate</span>
+                <button class="sort__button">
+                  <i class="fa-solid fa-sort sort__icon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <base-button
+              v-if="isLoggedIn && !isCoach && !isLoading"
+              link
+              to="/register"
+              >Register as Coach</base-button
+            >
+            <base-button
+              @click="loadCoaches(true)"
+              class="refresh"
+              mode="outline"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </base-button>
+          </div>
         </div>
         <div v-if="isLoading">
           <base-spinner></base-spinner>
@@ -60,6 +83,8 @@ export default {
         frontend: true,
         name: "",
       },
+      orderBy: "name",
+      order: "asc",
     };
   },
   computed: {
@@ -110,6 +135,47 @@ export default {
     handleError() {
       this.error = null;
     },
+    handleClickName() {
+      if (this.orderBy === "name") {
+        this.order = this.order === "asc" ? "desc" : "asc";
+      } else {
+        this.orderBy = "name";
+        this.order = "asc";
+      }
+      this.sortCoaches();
+    },
+    handleClickHourlyRate() {
+      if (this.orderBy === "hourlyRate") {
+        this.order = this.order === "asc" ? "desc" : "asc";
+      } else {
+        this.orderBy = "hourlyRate";
+        this.order = "asc";
+      }
+      this.sortCoaches();
+    },
+    sortCoaches() {
+      this.coaches.sort((a, b) => {
+        if (this.orderBy === "name") {
+          const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+          const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+          if (nameA < nameB) {
+            return this.order === "asc" ? -1 : 1;
+          }
+          if (nameA > nameB) {
+            return this.order === "asc" ? 1 : -1;
+          }
+          return 0;
+        } else if (this.orderBy === "hourlyRate") {
+          if (a.hourlyRate < b.hourlyRate) {
+            return this.order === "asc" ? -1 : 1;
+          }
+          if (a.hourlyRate > b.hourlyRate) {
+            return this.order === "asc" ? 1 : -1;
+          }
+          return 0;
+        }
+      });
+    },
   },
 };
 </script>
@@ -123,5 +189,40 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+.controls__left {
+  align-items: center;
+  display: flex;
+}
+.sort {
+  align-items: center;
+  column-gap: 0.5rem;
+  display: flex;
+}
+.sort__item {
+  align-items: center;
+  column-gap: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+}
+.labels {
+  color: var(--dark);
+  font-size: medium;
+  text-transform: uppercase;
+}
+.sort__button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.sort__icon {
+  color: var(--dark);
+  font-size: medium;
+  text-align: center;
+}
+.refresh {
+  margin-right: 0;
 }
 </style>
