@@ -69,7 +69,6 @@ button:active {
 .flat:active {
   background-color: hsl(0, 0%, 44%);
   border-color: hsl(0, 0%, 44%);
-  /* color: hsl(0, 0%, 31%); */
   color: hsl(0, 0%, 100%);
 }
 .outline:hover,

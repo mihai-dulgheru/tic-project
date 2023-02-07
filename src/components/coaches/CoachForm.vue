@@ -3,10 +3,11 @@
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName">First Name</label>
       <input
-        type="text"
-        id="firstName"
-        v-model.trim="firstName.value"
+        :autofocus="true"
         @blur="clearValidity('firstName')"
+        id="firstName"
+        type="text"
+        v-model.trim="firstName.value"
       />
       <p v-if="!firstName.isValid">First Name must not be empty.</p>
     </div>
@@ -42,43 +43,47 @@
     </div>
     <div class="form-control" :class="{ invalid: !areas.isValid }">
       <h3>Area of Expertise</h3>
-      <div>
-        <input
-          type="checkbox"
-          name="frontend"
-          id="frontend"
-          value="frontend"
-          v-model="areas.value"
-          @blur="clearValidity('areas')"
-        />
-        <label for="frontend">Frontend Development</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          name="backend"
-          id="backend"
-          value="backend"
-          v-model="areas.value"
-          @blur="clearValidity('areas')"
-        />
-        <label for="backend">Backend Development</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          name="career"
-          id="career"
-          value="career"
-          v-model="areas.value"
-          @blur="clearValidity('areas')"
-        />
-        <label for="career">Career Advisory</label>
+      <div class="areas">
+        <div>
+          <input
+            type="checkbox"
+            name="frontend"
+            id="frontend"
+            value="frontend"
+            v-model="areas.value"
+            @blur="clearValidity('areas')"
+          />
+          <label for="frontend">Frontend Development</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="backend"
+            id="backend"
+            value="backend"
+            v-model="areas.value"
+            @blur="clearValidity('areas')"
+          />
+          <label for="backend">Backend Development</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="career"
+            id="career"
+            value="career"
+            v-model="areas.value"
+            @blur="clearValidity('areas')"
+          />
+          <label for="career">Career Advisory</label>
+        </div>
       </div>
       <p v-if="!areas.isValid">At least one expertise must be selected.</p>
     </div>
     <p v-if="!formIsValid">Please fix the above errors and submit again.</p>
-    <base-button>Register</base-button>
+    <div class="center mt-2">
+      <base-button>Register</base-button>
+    </div>
   </form>
 </template>
 
@@ -152,8 +157,23 @@ export default {
 </script>
 
 <style scoped>
+form {
+  border-radius: 0.75rem;
+  border: 1px solid var(--light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
+  row-gap: 0.5rem;
+}
 .form-control {
   margin: 0.5rem 0;
+}
+.form-control div {
+  align-items: center;
+  display: flex;
+  justify-self: flex-start;
 }
 label {
   display: block;
@@ -171,6 +191,7 @@ textarea {
   border: 1px solid var(--light);
   display: block;
   font: inherit;
+  padding: 0.5rem;
   width: 100%;
 }
 input:focus,
@@ -197,5 +218,14 @@ h3 {
 .invalid input,
 .invalid textarea {
   border: 1px solid var(--error);
+}
+div.areas {
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+h3 {
+  font-size: 1rem;
+  margin-top: 0;
 }
 </style>

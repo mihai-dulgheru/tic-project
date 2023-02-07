@@ -7,7 +7,7 @@
       <base-spinner></base-spinner>
     </div>
     <base-card v-else>
-      <h2>Register as a coach now!</h2>
+      <h2 class="center">Register as a coach now!</h2>
       <coach-form @save-data="saveData"></coach-form>
     </base-card>
   </section>

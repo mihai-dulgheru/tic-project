@@ -9,18 +9,18 @@
     <section>
       <base-card>
         <div class="controls">
-          <div class="controls__left">
+          <div class="controls-left">
             <div class="sort">
-              <div class="sort__item" @click="handleClickName">
+              <div class="sort-item" @click="handleClickName">
                 <span class="labels">Name</span>
-                <button class="sort__button">
-                  <i class="fa-solid fa-sort sort__icon"></i>
+                <button class="sort-button">
+                  <i class="fa-solid fa-sort sort-icon"></i>
                 </button>
               </div>
-              <div class="sort__item" @click="handleClickHourlyRate">
+              <div class="sort-item" @click="handleClickHourlyRate">
                 <span class="labels">Hourly Rate</span>
-                <button class="sort__button">
-                  <i class="fa-solid fa-sort sort__icon"></i>
+                <button class="sort-button">
+                  <i class="fa-solid fa-sort sort-icon"></i>
                 </button>
               </div>
             </div>
@@ -190,34 +190,42 @@ ul {
   display: flex;
   justify-content: space-between;
 }
-.controls__left {
+.controls-left {
   align-items: center;
   display: flex;
 }
 .sort {
   align-items: center;
-  column-gap: 0.5rem;
+  column-gap: 0.25rem;
   display: flex;
 }
-.sort__item {
+.sort-item {
   align-items: center;
+  align-items: center;
+  animation: fade-in 0.5s ease-in-out;
+  border-radius: 0.25rem;
   column-gap: 0.25rem;
   cursor: pointer;
   display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem;
   user-select: none;
+}
+.sort-item:hover {
+  background-color: hsla(197, 37%, 24%, 0.1);
 }
 .labels {
   color: var(--dark);
   font-size: medium;
   text-transform: uppercase;
 }
-.sort__button {
+.sort-button {
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
 }
-.sort__icon {
+.sort-icon {
   color: var(--dark);
   font-size: medium;
   text-align: center;

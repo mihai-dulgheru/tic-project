@@ -272,10 +272,6 @@ textarea:focus {
   border-color: var(--primary);
   outline: none;
 }
-.errors {
-  color: var(--error);
-  font-weight: 700;
-}
 .actions {
   text-align: center;
 }

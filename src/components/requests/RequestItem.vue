@@ -4,7 +4,7 @@
       <a :href="emailLink">{{ email }}</a>
     </div>
     <p>{{ message }}</p>
-    <button @click="handleDelete"><i class="fa-solid fa-trash"></i></button>
+    <!-- <button @click="handleDelete"><i class="fa-solid fa-trash"></i></button> -->
   </li>
 </template>
 
