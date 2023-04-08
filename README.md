@@ -1,4 +1,4 @@
-# front
+# Information and Communication Technologies Project
 
 ## Project setup
 
